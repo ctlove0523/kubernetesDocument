@@ -1,2 +1,0 @@
-# Taints and Tolerations
-

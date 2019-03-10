@@ -1,2 +1,0 @@
-# Pod Priority and Preemption
-

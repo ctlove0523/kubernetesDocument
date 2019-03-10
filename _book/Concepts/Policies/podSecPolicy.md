@@ -1,2 +1,0 @@
-# Pod Security Policies
-
