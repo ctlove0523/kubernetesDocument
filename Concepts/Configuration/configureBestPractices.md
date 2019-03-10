@@ -27,23 +27,23 @@
 
 ## Services
 
-- Create a [Service](https://kubernetes.io/docs/concepts/services-networking/service/) before its corresponding backend workloads (Deployments or ReplicaSets), and before any workloads that need to access it. When Kubernetes starts a container, it provides environment variables pointing to all the Services which were running when the container was started. For example, if a Service named `foo` exists, all containers will get the following variables in their initial environment:
+- 在和后端负载（Deployments或ReplicaSets）关联，服务需要访问Services之前创建Services。当Kubernetes启动容器时，Kubernetes提供指向所有正在运行的Service的环境变量，当容器已经启动时。举个例子，如果有一个名为`foo`的服务存在，所有的容器将会从初始环境中获取到以下变量和值：
 
 ```shell
   FOO_SERVICE_HOST=<the host the Service is running on>
   FOO_SERVICE_PORT=<the port the Service is running on>
 ```
 
-If you are writing code that talks to a Service, don’t use these environment variables; use the [DNS name of the Service](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/) instead. Service environment variables are provided only for older software which can’t be modified to use DNS lookups, and are a much less flexible way of accessing Services.
+如果你在编写和Service交互的代码，请使用Service的DNS 名称而不是这些环境变量。Service的环境变量仅为哪些不能修改为使用DNS的老旧的软件，而且使用环境变量也不是那么方便。
 
-- Don’t specify a `hostPort` for a Pod unless it is absolutely necessary. When you bind a Pod to a `hostPort`, it limits the number of places the Pod can be scheduled, because each <`hostIP`, `hostPort`, `protocol`> combination must be unique. If you don’t specify the `hostIP` and `protocol` explicitly, Kubernetes will use `0.0.0.0` as the default `hostIP` and `TCP` as the default `protocol`.
+- 如果没有十分的必要，不要为Pod设置`hostPort` 。当给Pod绑定一个`hostPort` 会减少Pod可以被调度的节点，因为<`hostIP`, `hostPort`, `protocol`> 三元组必须是唯一的。如果，不显式的为Pod指定`hostIp`  和 `protocol`，Kubernetes默认为Pod的分区的`hostIp`  为 `0.0.0.0` ，`protocol` 为`TCP`。
 
-If you only need access to the port for debugging purposes, you can use the [apiserver proxy](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#manually-constructing-apiserver-proxy-urls) or [`kubectl port-forward`](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
+如果你指定端口仅仅是为了调试，可以尝试使用 apiserver 代理或者  [`kubectl port-forward`](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/).
 
-If you explicitly need to expose a Pod’s port on the node, consider using a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) Service before resorting to `hostPort`.
+如果，你需要显式的在节点上暴漏Pod的端口，考虑使用`hostPort`之前考虑使用`NodePort`：
 
-- Avoid using `hostNetwork`, for the same reasons as `hostPort`.
-- Use [headless Services](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) (which have a `ClusterIP` of `None`) for easy service discovery when you don’t need `kube-proxy` load balancing.
+- 不要使用`hostNetwork`，理由和`hostPort` 一样。
+- 当不需要`kube-proxy` 的负载均衡能力时，使用 [headless Services](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) 作为一种简单的服务发现。
 
 ## 使用标签
 
