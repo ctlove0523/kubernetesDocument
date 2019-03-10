@@ -4,25 +4,25 @@
 
 *   资源类型
 
-*   Resource requests and limits of Pod and Container
+*   Pod、容器资源request和limit
 
-*   Meaning of CPU
+*   CPU的意义
 
-*   [Meaning of memory](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory)
+*   内存的意义
 
-*   [How Pods with resource requests are scheduled](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#how-pods-with-resource-requests-are-scheduled)
+*   如何调度Pod
 
-*   [How Pods with resource limits are run](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#how-pods-with-resource-limits-are-run)
+*   如何运行Pod
 
-*   [Monitoring compute resource usage](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#monitoring-compute-resource-usage)
+*   监控计算资源使用
 
-*   [Troubleshooting](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#troubleshooting)
+*   故障排除
 
-*   [Local ephemeral storage](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#local-ephemeral-storage)
+*   本地短暂存储
 
-*   [Extended resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#extended-resources)
+*   扩展资源
 
-*   [Planned Improvements](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#planned-improvements)
+*   改进计划
 
 ### 资源类型
 
@@ -350,21 +350,21 @@ http://k8s-master:8080/api/v1/nodes/k8s-node-1/status
 
 #### 消耗扩展资源
 
-Users can consume extended resources in Pod specs just like CPU and memory. The scheduler takes care of the resource accounting so that no more than the available amount is simultaneously allocated to Pods.
+用户可以像CPU和内存一样在Pod中消耗扩展资源。调度器负责对资源进行统计，以避免将可用的资源同时分配给多个Pod。
 
-The API server restricts quantities of extended resources to whole numbers. Examples of *valid* quantities are `3`, `3000m` and `3Ki`. Examples of *invalid* quantities are `0.5` and `1500m`.
+API服务器将扩展资源的数量限制为整数，`3`，`3000m`和`3Ki`都是合法的表达式，`0.5`和`1500`是不合法的表达式。
 
-> **Note:** Extended resources replace Opaque Integer Resources. Users can use any domain name prefix other than `kubernetes.io` which is reserved.
+> **注意** 扩展资源取代了Opaque Integer Resources。 用户可以使用保留的kubernetes.io以外的任何域名前缀。
 
-To consume an extended resource in a Pod, include the resource name as a key in the `spec.containers[].resources.limits`map in the container spec.
+在Pod内消耗扩展资源，只需要将资源名作为`spec.containers[].resources.limits`的键，
 
-> **Note:** Extended resources cannot be overcommitted, so request and limit must be equal if both are present in a container spec.
+> **注意:** 扩展资源不能过量使用，因此如果容器中配置request和limit，则两者的值必须相等。
 
-A Pod is scheduled only if all of the resource requests are satisfied, including CPU, memory and any extended resources. The Pod remains in the `PENDING` state as long as the resource request cannot be satisfied.
+一个Pod只有当包括CPU，内存和任何扩展资源都满足的条件下才能被调度。如果Pod要求的资源得不到要求，则Pod的状态将一直保持在`PENDING`。
 
-**Example:**
+**样例:**
 
-The Pod below requests 2 CPUs and 1 “example.com/foo” (an extended resource).
+下面的Pod要求2CPU计算资源和1 “example.com/foo“扩展资源。
 
 ```yaml
 apiVersion: v1
