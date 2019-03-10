@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Pod Security Policies · GitBook</title>
+        <title>Runtime Class · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="lifecycle.html" />
     
-    <link rel="prev" href="resourceQuotas.html" />
+    
+    <link rel="prev" href="envs.html" />
     
 
     </head>
@@ -128,9 +130,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1.1" data-path="resourceQuotas.html">
+        <li class="chapter " data-level="1.2.1.1" data-path="../Policies/resourceQuotas.html">
             
-                <a href="resourceQuotas.html">
+                <a href="../Policies/resourceQuotas.html">
             
                     
                     Resource Quotas
@@ -141,9 +143,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.1.2" data-path="podSecPolicy.html">
+        <li class="chapter " data-level="1.2.1.2" data-path="../Policies/podSecPolicy.html">
             
-                <a href="podSecPolicy.html">
+                <a href="../Policies/podSecPolicy.html">
             
                     
                     Pod Security Policies
@@ -283,9 +285,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.3.1" data-path="../Containers/images.html">
+        <li class="chapter " data-level="1.2.3.1" data-path="images.html">
             
-                <a href="../Containers/images.html">
+                <a href="images.html">
             
                     
                     Images
@@ -296,9 +298,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3.2" data-path="../Containers/envs.html">
+        <li class="chapter " data-level="1.2.3.2" data-path="envs.html">
             
-                <a href="../Containers/envs.html">
+                <a href="envs.html">
             
                     
                     Container Environment Variables
@@ -309,9 +311,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3.3" data-path="../Containers/runtime.html">
+        <li class="chapter active" data-level="1.2.3.3" data-path="runtime.html">
             
-                <a href="../Containers/runtime.html">
+                <a href="runtime.html">
             
                     
                     Runtime Class
@@ -322,9 +324,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3.4" data-path="../Containers/lifecycle.html">
+        <li class="chapter " data-level="1.2.3.4" data-path="lifecycle.html">
             
-                <a href="../Containers/lifecycle.html">
+                <a href="lifecycle.html">
             
                     
                     Container Lifecycle Hooks
@@ -375,7 +377,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../.." >Pod Security Policies</a>
+        <a href="../.." >Runtime Class</a>
     </h1>
 </div>
 
@@ -390,7 +392,59 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="pod-security-policies">Pod Security Policies</h1>
+                                <h1 id="runtime-class">Runtime Class</h1>
+<p><strong>FEATURE STATE:</strong> <code>Kubernetes v1.12</code> <a href="https://kubernetes.io/docs/concepts/containers/runtime-class/#" target="_blank">alpha</a></p>
+<p>This page describes the RuntimeClass resource and runtime selection mechanism.</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/containers/runtime-class/#runtime-class" target="_blank">Runtime Class</a></li>
+</ul>
+<h2 id="runtime-class">Runtime Class</h2>
+<p>RuntimeClass is an alpha feature for selecting the container runtime configuration to use to run a pod&#x2019;s containers.</p>
+<h3 id="set-up">Set Up</h3>
+<p>As an early alpha feature, there are some additional setup steps that must be taken in order to use the RuntimeClass feature:</p>
+<ol>
+<li>Enable the RuntimeClass feature gate (on apiservers &amp; kubelets, requires version 1.12+)</li>
+<li>Install the RuntimeClass CRD</li>
+<li>Configure the CRI implementation on nodes (runtime dependent)</li>
+<li>Create the corresponding RuntimeClass resources</li>
+</ol>
+<h4 id="1-enable-the-runtimeclass-feature-gate">1. Enable the RuntimeClass feature gate</h4>
+<p>See <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/" target="_blank">Feature Gates</a> for an explanation of enabling feature gates. The <code>RuntimeClass</code> feature gate must be enabled on apiservers <em>and</em> kubelets.</p>
+<h4 id="2-install-the-runtimeclass-crd">2. Install the RuntimeClass CRD</h4>
+<p>The RuntimeClass <a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/" target="_blank">CustomResourceDefinition</a> (CRD) can be found in the addons directory of the Kubernetes git repo: <a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/runtimeclass/runtimeclass_crd.yaml" target="_blank">kubernetes/cluster/addons/runtimeclass/runtimeclass_crd.yaml</a></p>
+<p>Install the CRD with <code>kubectl apply -f runtimeclass_crd.yaml</code>.</p>
+<h4 id="3-configure-the-cri-implementation-on-nodes">3. Configure the CRI implementation on nodes</h4>
+<p>The configurations to select between with RuntimeClass are CRI implementation dependent. See the corresponding documentation for your CRI implementation for how to configure. As this is an alpha feature, not all CRIs support multiple RuntimeClasses yet.</p>
+<blockquote>
+<p><strong>Note:</strong> RuntimeClass currently assumes a homogeneous node configuration across the cluster (which means that all nodes are configured the same way with respect to container runtimes). Any heterogeneity (varying configurations) must be managed independently of RuntimeClass through scheduling features (see <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/" target="_blank">Assigning Pods to Nodes</a>).</p>
+</blockquote>
+<p>The configurations have a corresponding <code>RuntimeHandler</code> name, referenced by the RuntimeClass. The RuntimeHandler must be a valid DNS 1123 subdomain (alpha-numeric + <code>-</code> and <code>.</code> characters).</p>
+<h4 id="4-create-the-corresponding-runtimeclass-resources">4. Create the corresponding RuntimeClass resources</h4>
+<p>The configurations setup in step 3 should each have an associated <code>RuntimeHandler</code> name, which identifies the configuration. For each RuntimeHandler (and optionally the empty <code>&quot;&quot;</code> handler), create a corresponding RuntimeClass object.</p>
+<p>The RuntimeClass resource currently only has 2 significant fields: the RuntimeClass name (<code>metadata.name</code>) and the RuntimeHandler (<code>spec.runtimeHandler</code>). The object definition looks like this:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> node.k8s.io/v1alpha1  <span class="hljs-comment"># RuntimeClass is defined in the node.k8s.io API group</span>
+<span class="hljs-attr">kind:</span> RuntimeClass
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> myclass  <span class="hljs-comment"># The name the RuntimeClass will be referenced by</span>
+  <span class="hljs-comment"># RuntimeClass is a non-namespaced resource</span>
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  runtimeHandler:</span> myconfiguration  <span class="hljs-comment"># The name of the corresponding CRI configuration</span>
+</code></pre>
+<blockquote>
+<p><strong>Note:</strong> It is recommended that RuntimeClass write operations (create/update/patch/delete) be restricted to the cluster administrator. This is typically the default. See <a href="https://kubernetes.io/docs/reference/access-authn-authz/authorization/" target="_blank">Authorization Overview</a> for more details.</p>
+</blockquote>
+<h3 id="usage">Usage</h3>
+<p>Once RuntimeClasses are configured for the cluster, using them is very simple. Specify a <code>runtimeClassName</code> in the Pod spec. For example:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> v1
+<span class="hljs-attr">kind:</span> Pod
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> mypod
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  runtimeClassName:</span> myclass
+  <span class="hljs-comment"># ...</span>
+</code></pre>
+<p>This will instruct the Kubelet to use the named RuntimeClass to run this pod. If the named RuntimeClass does not exist, or the CRI cannot run the corresponding handler, the pod will enter the <code>Failed</code> terminal <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase" target="_blank">phase</a>. Look for a corresponding <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/" target="_blank">event</a> for an error message.</p>
+<p>If no <code>runtimeClassName</code> is specified, the default RuntimeHandler will be used, which is equivalent to the behavior when the RuntimeClass feature is disabled</p>
 
                                 
                                 </section>
@@ -418,10 +472,14 @@
 
             
                 
-                <a href="resourceQuotas.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Resource Quotas">
+                <a href="envs.html" class="navigation navigation-prev " aria-label="Previous page: Container Environment Variables">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
+                
+                <a href="lifecycle.html" class="navigation navigation-next " aria-label="Next page: Container Lifecycle Hooks">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -430,7 +488,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Pod Security Policies","level":"1.2.1.2","depth":3,"next":{"title":"Configuration","level":"1.2.2","depth":2,"ref":"","articles":[{"title":"Configuration Best Practices","level":"1.2.2.1","depth":3,"path":"Concepts/Configuration/configureBestPractices.md","ref":"Concepts/Configuration/configureBestPractices.md","articles":[]},{"title":"Managing Compute Resources for Containers","level":"1.2.2.2","depth":3,"path":"Concepts/Configuration/containerResources.md","ref":"Concepts/Configuration/containerResources.md","articles":[]},{"title":"Assigning Pods to Nodes","level":"1.2.2.3","depth":3,"path":"Concepts/Configuration/podAssign.md","ref":"Concepts/Configuration/podAssign.md","articles":[]},{"title":"Taints and Tolerations","level":"1.2.2.4","depth":3,"path":"Concepts/Configuration/tt.md","ref":"Concepts/Configuration/tt.md","articles":[]},{"title":"Secrets","level":"1.2.2.5","depth":3,"path":"Concepts/Configuration/secrets.md","ref":"Concepts/Configuration/secrets.md","articles":[]},{"title":"Organizing Cluster Access Using kubeconfig Files","level":"1.2.2.6","depth":3,"path":"Concepts/Configuration/ocaukf.md","ref":"Concepts/Configuration/ocaukf.md","articles":[]},{"title":"Pod Priority and Preemption","level":"1.2.2.7","depth":3,"path":"Concepts/Configuration/ppp.md","ref":"Concepts/Configuration/ppp.md","articles":[]}]},"previous":{"title":"Resource Quotas","level":"1.2.1.1","depth":3,"path":"Concepts/Policies/resourceQuotas.md","ref":"Concepts/Policies/resourceQuotas.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Concepts/Policies/podSecPolicy.md","mtime":"2019-03-09T13:04:03.757Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-10T10:21:22.632Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Runtime Class","level":"1.2.3.3","depth":3,"next":{"title":"Container Lifecycle Hooks","level":"1.2.3.4","depth":3,"path":"Concepts/Containers/lifecycle.md","ref":"Concepts/Containers/lifecycle.md","articles":[]},"previous":{"title":"Container Environment Variables","level":"1.2.3.2","depth":3,"path":"Concepts/Containers/envs.md","ref":"Concepts/Containers/envs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Concepts/Containers/runtime.md","mtime":"2019-03-10T10:20:21.893Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-10T10:21:22.632Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

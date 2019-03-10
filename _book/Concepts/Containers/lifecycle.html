@@ -1,0 +1,522 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Container Lifecycle Hooks · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="runtime.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Concepts
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" >
+            
+                <span>
+            
+                    
+                    Policies
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../Policies/resourceQuotas.html">
+            
+                <a href="../Policies/resourceQuotas.html">
+            
+                    
+                    Resource Quotas
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.2" data-path="../Policies/podSecPolicy.html">
+            
+                <a href="../Policies/podSecPolicy.html">
+            
+                    
+                    Pod Security Policies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" >
+            
+                <span>
+            
+                    
+                    Configuration
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../Configuration/configureBestPractices.html">
+            
+                <a href="../Configuration/configureBestPractices.html">
+            
+                    
+                    Configuration Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../Configuration/containerResources.html">
+            
+                <a href="../Configuration/containerResources.html">
+            
+                    
+                    Managing Compute Resources for Containers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="../Configuration/podAssign.html">
+            
+                <a href="../Configuration/podAssign.html">
+            
+                    
+                    Assigning Pods to Nodes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="../Configuration/tt.html">
+            
+                <a href="../Configuration/tt.html">
+            
+                    
+                    Taints and Tolerations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="../Configuration/secrets.html">
+            
+                <a href="../Configuration/secrets.html">
+            
+                    
+                    Secrets
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="../Configuration/ocaukf.html">
+            
+                <a href="../Configuration/ocaukf.html">
+            
+                    
+                    Organizing Cluster Access Using kubeconfig Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.7" data-path="../Configuration/ppp.html">
+            
+                <a href="../Configuration/ppp.html">
+            
+                    
+                    Pod Priority and Preemption
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    Containers
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="images.html">
+            
+                <a href="images.html">
+            
+                    
+                    Images
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="envs.html">
+            
+                <a href="envs.html">
+            
+                    
+                    Container Environment Variables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="runtime.html">
+            
+                <a href="runtime.html">
+            
+                    
+                    Runtime Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3.4" data-path="lifecycle.html">
+            
+                <a href="lifecycle.html">
+            
+                    
+                    Container Lifecycle Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Container Lifecycle Hooks</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="container-lifecycle-hooks">Container Lifecycle Hooks</h1>
+<p>This page describes how kubelet managed Containers can use the Container lifecycle hook framework to run code triggered by events during their management lifecycle.</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#overview" target="_blank">Overview</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks" target="_blank">Container hooks</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#what-s-next" target="_blank">What&apos;s next</a></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>Analogous to many programming language frameworks that have component lifecycle hooks, such as Angular, Kubernetes provides Containers with lifecycle hooks. The hooks enable Containers to be aware of events in their management lifecycle and run code implemented in a handler when the corresponding lifecycle hook is executed.</p>
+<h2 id="container-hooks">Container hooks</h2>
+<p>There are two hooks that are exposed to Containers:</p>
+<pre><code>PostStart
+</code></pre><p>This hook executes immediately after a container is created. However, there is no guarantee that the hook will execute before the container ENTRYPOINT. No parameters are passed to the handler.</p>
+<pre><code>PreStop
+</code></pre><p>This hook is called immediately before a container is terminated due to an API request or management event such as liveness probe failure, preemption, resource contention and others. A call to the preStop hook fails if the container is already in terminated or completed state. It is blocking, meaning it is synchronous, so it must complete before the call to delete the container can be sent. No parameters are passed to the handler.</p>
+<p>A more detailed description of the termination behavior can be found in <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods" target="_blank">Termination of Pods</a>.</p>
+<h3 id="hook-handler-implementations">Hook handler implementations</h3>
+<p>Containers can access a hook by implementing and registering a handler for that hook. There are two types of hook handlers that can be implemented for Containers:</p>
+<ul>
+<li>Exec - Executes a specific command, such as <code>pre-stop.sh</code>, inside the cgroups and namespaces of the Container. Resources consumed by the command are counted against the Container.</li>
+<li>HTTP - Executes an HTTP request against a specific endpoint on the Container.</li>
+</ul>
+<h3 id="hook-handler-execution">Hook handler execution</h3>
+<p>When a Container lifecycle management hook is called, the Kubernetes management system executes the handler in the Container registered for that hook. </p>
+<p>Hook handler calls are synchronous within the context of the Pod containing the Container. This means that for a <code>PostStart</code>hook, the Container ENTRYPOINT and hook fire asynchronously. However, if the hook takes too long to run or hangs, the Container cannot reach a <code>running</code> state.</p>
+<p>The behavior is similar for a <code>PreStop</code> hook. If the hook hangs during execution, the Pod phase stays in a <code>Terminating</code> state and is killed after <code>terminationGracePeriodSeconds</code> of pod ends. If a <code>PostStart</code> or <code>PreStop</code> hook fails, it kills the Container.</p>
+<p>Users should make their hook handlers as lightweight as possible. There are cases, however, when long running commands make sense, such as when saving state prior to stopping a Container.</p>
+<h3 id="hook-delivery-guarantees">Hook delivery guarantees</h3>
+<p>Hook delivery is intended to be <em>at least once</em>, which means that a hook may be called multiple times for any given event, such as for <code>PostStart</code> or <code>PreStop</code>. It is up to the hook implementation to handle this correctly.</p>
+<p>Generally, only single deliveries are made. If, for example, an HTTP hook receiver is down and is unable to take traffic, there is no attempt to resend. In some rare cases, however, double delivery may occur. For instance, if a kubelet restarts in the middle of sending a hook, the hook might be resent after the kubelet comes back up.</p>
+<h3 id="debugging-hook-handlers">Debugging Hook handlers</h3>
+<p>The logs for a Hook handler are not exposed in Pod events. If a handler fails for some reason, it broadcasts an event. For <code>PostStart</code>, this is the <code>FailedPostStartHook</code> event, and for <code>PreStop</code>, this is the <code>FailedPreStopHook</code> event. You can see these events by running <code>kubectl describe pod &lt;pod_name&gt;</code>. Here is some example output of events from running this command:</p>
+<pre><code>Events:
+  FirstSeen  LastSeen  Count  From                                                   SubobjectPath          Type      Reason               Message
+  ---------  --------  -----  ----                                                   -------------          --------  ------               -------
+  1m         1m        1      {default-scheduler }                                                          Normal    Scheduled            Successfully assigned test-1730497541-cq1d2 to gke-test-cluster-default-pool-a07e5d30-siqd
+  1m         1m        1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Pulling              pulling image &quot;test:1.0&quot;
+  1m         1m        1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Created              Created container with docker id 5c6a256a2567; Security:[seccomp=unconfined]
+  1m         1m        1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Pulled               Successfully pulled image &quot;test:1.0&quot;
+  1m         1m        1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Started              Started container with docker id 5c6a256a2567
+  38s        38s       1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Killing              Killing container with docker id 5c6a256a2567: PostStart handler: Error executing in Docker Container: 1
+  37s        37s       1      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Normal    Killing              Killing container with docker id 8df9fdfd7054: PostStart handler: Error executing in Docker Container: 1
+  38s        37s       2      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}                         Warning   FailedSync           Error syncing pod, skipping: failed to &quot;StartContainer&quot; for &quot;main&quot; with RunContainerError: &quot;PostStart handler: Error executing in Docker Container: 1&quot;
+  1m         22s       2      {kubelet gke-test-cluster-default-pool-a07e5d30-siqd}  spec.containers{main}  Warning   FailedPostStartHook
+</code></pre><h2 id="whats-next">What&apos;s next</h2>
+<ul>
+<li>Learn more about the <a href="https://kubernetes.io/docs/concepts/containers/container-environment-variables/" target="_blank">Container environment</a>.</li>
+<li>Get hands-on experience <a href="https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/" target="_blank">attaching handlers to Container lifecycle events</a>.</li>
+</ul>
+<h2 id="feedback">Feedback</h2>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="runtime.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Runtime Class">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Container Lifecycle Hooks","level":"1.2.3.4","depth":3,"previous":{"title":"Runtime Class","level":"1.2.3.3","depth":3,"path":"Concepts/Containers/runtime.md","ref":"Concepts/Containers/runtime.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Concepts/Containers/lifecycle.md","mtime":"2019-03-10T10:21:06.628Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-10T10:21:22.632Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
