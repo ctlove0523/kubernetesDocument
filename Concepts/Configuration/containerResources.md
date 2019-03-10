@@ -94,8 +94,304 @@ spec:
         cpu: "500m"
 ```
 
-### 如何调度对资源requests的pod
+### 如何调度对资源有要求的pod
 
-When you create a Pod, the Kubernetes scheduler selects a node for the Pod to run on. Each node has a maximum capacity for each of the resource types: the amount of CPU and memory it can provide for Pods. The scheduler ensures that, for each resource type, the sum of the resource requests of the scheduled Containers is less than the capacity of the node. Note that although actual memory or CPU resource usage on nodes is very low, the scheduler still refuses to place a Pod on a node if the capacity check fails. This protects against a resource shortage on a node when resource usage later increases, for example, during a daily peak in request rate.
+------
 
-### How Pods with resource limits are run
+当你创建一个pod时，kubernete的调度器会选择一个节点允许pod。节点上每种资源都有一个最大容量：可以为pod提供的CPU和内存的总和。调度器保证，对于每种资源，调度容器需要的总和低于节点的容量。注意，即使节点cpu和内存的使用非常低，如果容量检查失败，调度器依然会拒绝讲pod调度到该节点。当稍后资源的使用增加时，这可以有效的阻止节点上资源的短缺，例如，在一天中请求最高的时刻。
+
+### 如何允许使用资源有限制的pod
+
+------
+
+当kubelet启动一个容器pod，kubelet把CPU和内存的限制传给容器运行时。
+
+当使用Docker时:
+
+- ~~spec.containers[].resources.requests.cpu的值会转换为核数，如果值为分数则乘1024，并将该值作为docker run --cpu-shares的值。~~
+-  `spec.containers[].resources.limits.cpu` 值转换为微核值并乘100，该值为容器每100ms内使用的总的cpu事件。在100ms的时间间隔内容器不可以使用超过容器共享的cpu时间。
+
+> **注意:** 默认的配额周期为100ms，cpu分配时间的周期是1ms。
+
+- `spec.containers[].resources.limits.memory` 值转换为一个整数，并作为`docker run --memory`的值用于启动容器。
+
+如果一个容器使用了超过内存限制的内存，容器可能被停止。如果容器可以重启，kubelet会重启容器，其他类型的运行时错误也一样。如果一个容器超过了对内存的需要值，当节点内存不足时，pod可能被驱逐。容器长时间使用超过cpu限制可能会被杀死也可能不会被杀死。但是，容器不会因为cpu使用率高而被杀死。
+
+### 监控计算资源的使用
+
+------
+
+资源使用是pod状态报告的一部分。如果kubernetes集群配置了可选的[监控](https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/cluster-monitoring/README.md)插件，pod对资源的使用可以从监控系统获取。
+
+### 故障排除
+
+------
+
+#### Pod一直处于pending状态，错误信息为调度失败
+
+如果调度器找不到任何一个可以允许pod的节点，在找到这样的节点之前pod一直处于未调度状态。每次调度器查找节点失败时，会产生如下类似的一个事件：
+
+```shell
+kubectl describe pod frontend | grep -A 3 Events
+Events:
+  FirstSeen LastSeen   Count  From          Subobject   PathReason      Message
+  36s   5s     6      {scheduler }              FailedScheduling  Failed for reason PodExceedsFreeCPU and possibly others
+```
+
+在上面的例子中，一个名叫“frontend”的pod因为节点的cpu资源不足而调度失败，当节点内存不足时会出现类似的错误信息（PodExceedsFreeMemory）。一般来说，如果pod处于pending状态并且错误信息未cpu资源不足或内存资源不足时，可以尝试以下方法解决：
+
+- 向集群添加更多的节点。
+- 停止不需要的pod，将资源提供给pending状态的pods。
+- 检查pod不大于所有节点。例如，所有节点的cpu容量为1，但是一个pod对cpu的需求为1.1，则该pod永远无法被调度。
+
+使用 kubectl describe node 可以查看节点所有资源和已经分配的资源。
+
+```shell
+kubectl describe nodes e2e-test-minion-group-4lw4
+Name:            e2e-test-minion-group-4lw4
+[ ... lines removed for clarity ...]
+Capacity:
+ cpu:                               2
+ memory:                            7679792Ki
+ pods:                              110
+Allocatable:
+ cpu:                               1800m
+ memory:                            7474992Ki
+ pods:                              110
+[ ... lines removed for clarity ...]
+Non-terminated Pods:        (5 in total)
+  Namespace    Name                                  CPU Requests  CPU Limits  Memory Requests  Memory Limits
+  ---------    ----                                  ------------  ----------  ---------------  -------------
+  kube-system  fluentd-gcp-v1.38-28bv1               100m (5%)     0 (0%)      200Mi (2%)       200Mi (2%)
+  kube-system  kube-dns-3297075139-61lj3             260m (13%)    0 (0%)      100Mi (1%)       170Mi (2%)
+  kube-system  kube-proxy-e2e-test-...               100m (5%)     0 (0%)      0 (0%)           0 (0%)
+  kube-system  monitoring-influxdb-grafana-v4-z1m12  200m (10%)    200m (10%)  600Mi (8%)       600Mi (8%)
+  kube-system  node-problem-detector-v0.1-fj7m3      20m (1%)      200m (10%)  20Mi (0%)        100Mi (1%)
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  CPU Requests    CPU Limits    Memory Requests    Memory Limits
+  ------------    ----------    ---------------    -------------
+  680m (34%)      400m (20%)    920Mi (12%)        1070Mi (14%)
+```
+
+从上面的输出可以看出，如果一个pod需要超过1120mCPU和6.23Gi的内存，pod将不会调度到该节点。从`Pods`中可以看出该节点上其他pod使用的资源情况。节点可以为pod提供的资源总和低于节点容量，因为系统守护进程占用了部分资源。`allocatable`给出了节点可以为pod提供的可用资源。可以配置资源配额以限制所有资源的消耗，结和命名空间，可以避免一个团队消耗过多的资源。
+
+#### 容器终止
+
+你的容器可能因为资源匮乏而终止。使用`kubectl describe pod`命令可以查看一个容器是否因为使用超过了限制的资源而被杀死：
+
+```shell
+kubectl describe pod simmemleak-hra99
+Name:                           simmemleak-hra99
+Namespace:                      default
+Image(s):                       saadali/simmemleak
+Node:                           kubernetes-node-tf0f/10.240.216.66
+Labels:                         name=simmemleak
+Status:                         Running
+Reason:
+Message:
+IP:                             10.244.2.75
+Replication Controllers:        simmemleak (1/1 replicas created)
+Containers:
+  simmemleak:
+    Image:  saadali/simmemleak
+    Limits:
+      cpu:                      100m
+      memory:                   50Mi
+    State:                      Running
+      Started:                  Tue, 07 Jul 2015 12:54:41 -0700
+    Last Termination State:     Terminated
+      Exit Code:                1
+      Started:                  Fri, 07 Jul 2015 12:54:30 -0700
+      Finished:                 Fri, 07 Jul 2015 12:54:33 -0700
+    Ready:                      False
+    Restart Count:              5
+Conditions:
+  Type      Status
+  Ready     False
+Events:
+  FirstSeen                         LastSeen                         Count  From                              SubobjectPath                       Reason      Message
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {scheduler }                                                          scheduled   Successfully assigned simmemleak-hra99 to kubernetes-node-tf0f
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   pulled      Pod container image "k8s.gcr.io/pause:0.8.0" already present on machine
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   created     Created with docker id 6a41280f516d
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   started     Started with docker id 6a41280f516d
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    spec.containers{simmemleak}         created     Created with docker id 87348f12526a
+```
+
+上面例子中的 `Restart Count: 5` 说明 `simmemleak`容器已经终止并被重启5次。可以使用`kubectl get pod`命令配合 `-o go-template=...`参数来获取之前处于停止状态的容器。
+
+```shell
+kubectl get pod -o go-template='{{range.status.containerStatuses}}{{"Container Name: "}}{{.name}}{{"\r\nLastState: "}}{{.lastState}}{{end}}'  simmemleak-hra99
+Container Name: simmemleak
+LastState: map[terminated:map[exitCode:137 reason:OOM Killed startedAt:2015-07-07T20:58:43Z finishedAt:2015-07-07T20:58:43Z containerID:docker://0e4095bba1feccdfe7ef9fb6ebffe972b4b14285d5acdec6f0d3ae8a22fad8b2]]
+```
+
+容器终止的原因是 `reason:OOM Killed`,  `OOM` 是标准的内存溢出错误，说明容器使用了超过限制的内存。
+
+### 本地短暂存储
+
+**特性状态:** `Kubernetes v1.13` [beta](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#)
+
+Kubernetes在1.8版本引入了一种新的资源：*ephemeral-storage*用于管理本地短暂存储。在Kubernetes的每一个节点，kubelet的根目录（默认路径为/var/lib/kubelet）和日志目录（/var/log）默认存储在节点的根分区之下。Pod通过emptyDis卷。容器日志，镜像层和镜像可写层共享和消耗节点更分区空间。
+
+该分区是“短暂”的，应用程序不能期望从该分区得到任何性能SLAs，比如磁盘IOPS。本地短暂存储管理仅仅适用于根分区，镜像层和可写层的可选分区不是管理范围内。
+
+> 注意：如果使用了可选的运行时分区，根分区将不会保存任何镜像层和镜像可写层。
+
+#### 本地短暂存储request和limits的设置
+
+Pod中的容器支持以下一个或多个配置：
+
+- `spec.containers[].resources.limits.ephemeral-storage`
+- `spec.containers[].resources.requests.ephemeral-storage`
+
+ `ephemeral-storage` 的单位为字节，可以使用普通整数和科学记数法配合后缀 E, P, T, G, M, K或 Ei, Pi, Ti, Gi, Mi, Ki来表示limits和requests。以下多种表达方式给出的值是一样的：
+
+```shell
+128974848, 129e6, 129M, 123Mi
+```
+
+例如，下面的pod有两个容器，每个容器需要本地短暂存储的大小为2GiB，每个容器限制使用的本地短暂存储的大小为4GiB。对于Pod来说，Pod需要最少4GiB本地短暂存储，最多8GiB本地短暂存储。
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: db
+    image: mysql
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "password"
+    resources:
+      requests:
+        ephemeral-storage: "2Gi"
+      limits:
+        ephemeral-storage: "4Gi"
+  - name: wp
+    image: wordpress
+    resources:
+      requests:
+        ephemeral-storage: "2Gi"
+      limits:
+        ephemeral-storage: "4Gi"
+```
+
+#### 如果调度对本地短暂存储有要求的Pod
+
+当你创建一个pod时，kubernete的调度器会选择一个节点运行pod。每个节点都有可供Pod使用的本地短暂存储的总量。调度器保证待调度的容器对本地短暂存储的需求的总和不会超过节点的容量。
+
+#### 如何允许对本地短暂存储有限制的Pod
+
+对于容器级别的隔离，如果一个容器可写层和日志使用了超过限制的本地短暂存储，Pod将会被从当前节点驱逐。对于Pod级别的隔离，如果所有容器使用的本地短暂存储总和以及Pod的emptyDis卷超过限制，Pod将会被驱逐。
+
+### 扩展资源
+
+扩展资源是kubernetes.io域之外所有资源的完全限定名。它们允许集群运营商进行增强，并允许用户使用非Kubernetes内置资源。使用扩展资源需要两个步骤：1、集群运营商提供一种扩展资源；2、用户在Pod内请求使用扩展资源。
+
+#### 管理扩展资源
+
+##### 节点级别的扩展资源
+
+节点级别扩展资源与节点相关联。
+
+##### 设备插件管理资源
+
+参考[Device Plugin](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/) 
+
+##### 其他资源
+
+要增减新的节点级扩展资源，群集操作员可以向API服务器提交`PATCH` HTTP请求，以指定群集中节点的`status.capacity`中的可用数量。 执行此操作后，节点的`status.capacity`将包含新资源。 kubelet将异步地使用新资源自动更新`status.allocatable`字段。 请注意，由于调度程序在评估Pod适应性时使用节点status.allocatable值，因此在使用新资源修补节点容量与请求在该节点上调度资源的第一个Pod之间可能存在短暂的延迟。
+
+**样例:**
+
+下面是一个使用curl向集群`k8s-master`中的 `k8s-node-1` 节点添加一个初始容量为5的名为“example.com/foo”的扩展资源。
+
+```shell
+curl --header "Content-Type: application/json-patch+json" \
+--request PATCH \
+--data '[{"op": "add", "path": "/status/capacity/example.com~1foo", "value": "5"}]' \
+http://k8s-master:8080/api/v1/nodes/k8s-node-1/status
+```
+
+#### 集群级别的扩展资源
+
+集群级别的扩展资源不与节点关联，通常由调度器的扩展程序负责管理，调度器扩展程序同时负责资源消耗和资源配额。
+
+使用 [scheduler policy configuration](https://github.com/kubernetes/kubernetes/blob/release-1.10/pkg/scheduler/api/v1/types.go#L31) 可以配置需要被调度器扩展程序管理的扩展资源。
+
+**样例:**
+
+下面的调度器策略配置表明集群级别的扩展资源“example.com/foo”将有调度器扩展程序负责管理。
+
+- 当一个pod请求 “example.com/foo”时才会使用调度器扩展程序调度。
+- `ignoredByScheduler` 字段指明调度器在  `PodFitsResources` 判断时忽略“example.com/foo” 资源检查。
+
+```json
+{
+  "kind": "Policy",
+  "apiVersion": "v1",
+  "extenders": [
+    {
+      "urlPrefix":"<extender-endpoint>",
+      "bindVerb": "bind",
+      "managedResources": [
+        {
+          "name": "example.com/foo",
+          "ignoredByScheduler": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### 消耗扩展资源
+
+Users can consume extended resources in Pod specs just like CPU and memory. The scheduler takes care of the resource accounting so that no more than the available amount is simultaneously allocated to Pods.
+
+The API server restricts quantities of extended resources to whole numbers. Examples of *valid* quantities are `3`, `3000m` and `3Ki`. Examples of *invalid* quantities are `0.5` and `1500m`.
+
+> **Note:** Extended resources replace Opaque Integer Resources. Users can use any domain name prefix other than `kubernetes.io` which is reserved.
+
+To consume an extended resource in a Pod, include the resource name as a key in the `spec.containers[].resources.limits`map in the container spec.
+
+> **Note:** Extended resources cannot be overcommitted, so request and limit must be equal if both are present in a container spec.
+
+A Pod is scheduled only if all of the resource requests are satisfied, including CPU, memory and any extended resources. The Pod remains in the `PENDING` state as long as the resource request cannot be satisfied.
+
+**Example:**
+
+The Pod below requests 2 CPUs and 1 “example.com/foo” (an extended resource).
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: myimage
+    resources:
+      requests:
+        cpu: 2
+        example.com/foo: 1
+      limits:
+        example.com/foo: 1
+```
+
+### 改进计划
+
+------
+
+Kubernetes 1.5版本仅允许在容器上指定资源数量。计划改进对Pod中所有容器共享的资源的“计费”，例如emptyDir卷。
+
+Kubernetes 1.5版本仅仅支持容器对CPU和内存的request和limit，计划增加新的资源类型，包括磁盘空间，并添加一个支持用户自定义资源的框架。
+
+Kubernetes通过支持多个级别的服务质量来支持资源的过度使用。
+
+Kubernetes 1.5版本中一单位CPU在不同的云供应商和同一云供应商不同类型机器上的含义不相同。例如，在AWS上，节点的容量以ECUs表示，在GCE上以逻辑核表示。我们计划修改cpu资源的定义，以便在供应商和平台之间实现更高的一致性。
+
