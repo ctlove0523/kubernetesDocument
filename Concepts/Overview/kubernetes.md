@@ -14,6 +14,11 @@ Kubernetes is a portable, extensible open-source platform for managing container
 
 Google open-sourced the Kubernetes project in 2014. Kubernetes builds upon a [decade and a half of experience that Google has with running production workloads at scale](https://research.google.com/pubs/pub43438.html), combined with best-of-breed ideas and practices from the community.
 
+Kubernetes是一个用于管理容器化的工作负载和服务,可移植，可扩展的开源平台，对声明性配置和自动化有很好的支持。Kubernetes拥有庞大，快速发展的生态系统。 Kubernetes服务，支持和工具得到广泛应用。
+
+谷歌在2014年开源了Kubernetes项目.Kubernetes建立在谷歌大规模运行生产负载十五年经验的基础上，并结合了社区中的最佳创意和实践。
+
+
 ## 为什么需要Kubernetes，Kubernetes能干什么？
 
 ~~Kubernetes has a number of features. It can be thought of as:~~
