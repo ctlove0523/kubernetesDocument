@@ -1,10 +1,4 @@
 # Kubernetes Components
-This document outlines the various binary components needed to deliver a functioning Kubernetes cluster.
-
-- Master Components
-- Node Components
-- Addons
-
 本文重点介绍构建一个可用Kubernetes集群需要的二进制组件：
 
 - 主要组件
@@ -13,51 +7,31 @@ This document outlines the various binary components needed to deliver a functio
 
 ## 主要组件
 
-Master components provide the cluster’s control plane. Master components make global decisions about the cluster (for example, scheduling), and detecting and responding to cluster events (starting up a new pod when a replication controller’s ‘replicas’ field is unsatisfied).
-
-Master components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all master components on the same machine, and do not run user containers on this machine. See Building High-Availability Clusters for an example multi-master-VM setup.
-
 主要组件提供Kubernetes集群的控制平面。主要组件负责集群全局决策（比如，调度），检测并响应集群事件（当副本控制器的副本字段的值不满足期望时，启动一个新的Pod）。
 
 主要组件可以运行在集群中的任何机器之上。但是，为了简单起见，通常配置脚本在同一台机器上启动所有主要组件，而且不在该机器上运行用户的容器。
 
 ### kube-apiserver
 
-Component on the master that exposes the Kubernetes API. It is the front-end for the Kubernetes control plane.
-
-It is designed to scale horizontally – that is, it scales by deploying more instances. See Building High-Availability Clusters.
+------
 
 暴露Kubernetes API的主要组件。kube-apiserver 是Kubernetes集群的前端控制平面。kube-apiserver可以通过增加实例来实现水平扩展。
 
 ### etcd
 
-Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
-
-Always have a backup plan for etcd’s data for your Kubernetes cluster. For in-depth information on etcd, see etcd documentation.
+------
 
 etcd是一种一致性、高可用的键值存储系统，Kubernetes用来存储所有集群数据。你的Kubernetes集群中的etcd应当有备份计划。有关etcd更深入的内容参考etcd documentation.
 
 ### kube-scheduler
 
-Component on the master that watches newly created pods that have no node assigned, and selects a node for them to run on.
-
-Factors taken into account for scheduling decisions include individual and collective resource requirements, hardware/software/policy constraints, affinity and anti-affinity specifications, data locality, inter-workload interference and deadlines.
+------
 
 监控为分配节点的新创建Pod，并选择一个合适的节点运行pod。调度需要考虑一下因素：集群资源、硬件/软件/策略约束、亲和/反亲和配置、数据位置、负载间干扰和调度的时间限制。
 
 ### kube-controller-manager
 
-Component on the master that runs controllers.
-
-Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.
-
-These controllers include:
-
-- Node Controller: Responsible for noticing and responding when nodes go down.
-- Replication Controller: Responsible for maintaining the correct number of pods for every replication controller object in the system.
-- Endpoints Controller: Populates the Endpoints object (that is, joins Services & Pods).
-
-- Service Account & Token Controllers: Create default accounts and API access tokens for new namespaces.
+------
 
 用于运行控制器的组件。
 
@@ -74,59 +48,73 @@ These controllers include:
 
 ### cloud-controller-manager
 
-[cloud-controller-manager](https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/) runs controllers that interact with the underlying cloud providers. The cloud-controller-manager binary is an alpha feature introduced in Kubernetes release 1.6.
+------
 
-cloud-controller-manager runs cloud-provider-specific controller loops only. You must disable these controller loops in the kube-controller-manager. You can disable the controller loops by setting the `--cloud-provider` flag to `external` when starting the kube-controller-manager.
+[cloud-controller-manager运行和底层云提供商交互的控制器。cloud-controller-manager是Kubernetes在1.6版本引入，目前还是alpha版本功能。
 
-cloud-controller-manager allows cloud vendors code and the Kubernetes code to evolve independent of each other. In prior releases, the core Kubernetes code was dependent upon cloud-provider-specific code for functionality. In future releases, code specific to cloud vendors should be maintained by the cloud vendor themselves, and linked to cloud-controller-manager while running Kubernetes.
+cloud-controller-manager只循环调用云供应商特定的控制器。你需要在kube-controller-manager中禁止这些控制器的循环调用。可以在启动kube-controller-manager时将 `--cloud-provider` 设置为 `external` 关闭循环调用控制器。
 
-The following controllers have cloud provider dependencies:
+cloud-controller-manager 允许云供应商的代码和Kubernetes的代码独立发展，不再互相依赖。在之前的版本中，Kubernetes的核心代码依赖云供应商的特殊代码来提供功能。在将来的版本中，云供应商特有的代码应由云供应商自己维护，在允许Kubernetes时与cloud-controller-manager连接。
 
-- Node Controller: For checking the cloud provider to determine if a node has been deleted in the cloud after it stops responding
-- Route Controller: For setting up routes in the underlying cloud infrastructure
-- Service Controller: For creating, updating and deleting cloud provider load balancers
-- Volume Controller: For creating, attaching, and mounting volumes, and interacting with the cloud provider to orchestrate volumes
+以下控制器依赖于云供应商：
 
-## Node Components
+* 节点控制器。节点停止响应时，检查节点是否已经从云删除。
+* 路由控制器。设置底层云基础设施路由。
+* 服务控制器。创建，更新和删除云供应商负载均衡器。
+* 卷控制器。创建，附加，挂载卷，并和云供应商交互以协调卷。
 
-Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+
+
+## 节点组件
+
+节点组件允许在每一个节点，维护运行的pods并为Kubernetes提供运行时环境。
 
 ### kubelet
 
-An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+------
 
-The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn’t manage containers which were not created by Kubernetes.
+运行在集群中每个节点上的一个代理。kubelet确保pod内的容器运行。
+
+kubelet拥有一系列通过各种机制提供的PodSpecs，并确保这些PodSpecs中描述的容器正在运行且健康。kubelet不会管理非Kubernetes创建的容器。
 
 ### kube-proxy
 
 [kube-proxy](https://kubernetes.io/docs/admin/kube-proxy/) enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding.
 
+kube-proxy通过维护主机上的网络规则并执行连接转发来支持Kubernetes服务抽象。
+
 ### Container Runtime
 
-The container runtime is the software that is responsible for running containers. Kubernetes supports several runtimes: [Docker](http://www.docker.com/), [containerd](https://containerd.io/), [cri-o](https://cri-o.io/), [rktlet](https://github.com/kubernetes-incubator/rktlet) and any implementation of the [Kubernetes CRI (Container Runtime Interface)](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md).
+------
 
-## Addons
+容器运行时环境是负责运行容器的软件，Kubernetes支持多种运行时环境：Docker，containerd，cri-o，rktlet和任何 [Kubernetes CRI (Container Runtime Interface)](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md).实现
 
-Addons are pods and services that implement cluster features. The pods may be managed by Deployments, ReplicationControllers, and so on. Namespaced addon objects are created in the `kube-system` namespace.
+## 插件
 
-Selected addons are described below, for an extended list of available addons please see [Addons](https://kubernetes.io/docs/concepts/cluster-administration/addons/).
+插件是实现了集群某种功能的pod或服务。Pod可能由Depoyment，ReplicationController等管理。命名空间插件在`kube-system` 命名空间内创建。
+
+Kubernetes选定的插件如下，其他支持的插件可以从 [插件列表](https://kubernetes.io/docs/concepts/cluster-administration/addons/).获取。
 
 ### DNS
 
-While the other addons are not strictly required, all Kubernetes clusters should have [cluster DNS](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/), as many examples rely on it.
+------
 
-Cluster DNS is a DNS server, in addition to the other DNS server(s) in your environment, which serves DNS records for Kubernetes services.
-
-Containers started by Kubernetes automatically include this DNS server in their DNS searches.
+虽然其他插件并非一定需要，但所有Kubernetes集群都应具有集群DNS，因为许多示例都依赖于它。集群DNS是一个DNS服务器，除了你环境中的其他DNS服务器，为Kuberntes中的服务提供服务。Kubernetes启动的容器在DNS搜索列表中自动包含该DNS服务器。
 
 ### Web UI (Dashboard)
 
-[Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage and troubleshoot applications running in the cluster, as well as the cluster itself.
+------
+
+仪表板是Kubernetes集群的基于Web的通用UI。 它允许用户管理和调试群集中运行的应用程序以及群集本身。
 
 ### Container Resource Monitoring
 
-[Container Resource Monitoring](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/) records generic time-series metrics about containers in a central database, and provides a UI for browsing that data.
+------
+
+容器资源监控将容器的通用时间序列指标存储在一个中央数据库中，并提供用于浏览该数据的UI。
 
 ### Cluster-level Logging
 
-A [Cluster-level logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/) mechanism is responsible for saving container logs to a central log store with search/browsing interface.
+------
+
+集群级别的日志机制支持将所有的容器日志存储到一个中心日志存储中，并提供搜索和查询接口。
