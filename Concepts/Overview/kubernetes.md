@@ -107,6 +107,26 @@ Summary of container benefits:
 - **Resource isolation**: Predictable application performance.
 - **Resource utilization**: High efficiency and density.
 
+老的部署应用的方法是使用操作系统的包管理器在主机上部署应用。采用这种方式部署应用的缺点是，应用的执行文件、配置、库和生命周期互相耦合，而且都与主机的操作系统耦合。为了实现可预测的部署和回滚，可以采用构建不可变虚拟机镜像的方法，但是虚拟机非常重而且不可移植。
+
+新的部署方法基于操作系统级别虚拟计划而非硬件级别虚拟化来部署容器。这些容器间彼此隔离而且与主机隔离：容器拥有自己的文件系统，无法看到彼此的进程，容器使用的计算资源也受到限制。容器比虚拟机更加容易构建，容器与底层的基础设施和主机文件系统分离，因此容器可以跨云和操作系统分发。
+
+因为容器更加轻量更快，每个应用程序可以打包到各自的镜像中。这种应用与镜像一对一的关系释放了容器所有的优势。使用容器，可以在构建/发布时而不是部署是创建不可变的容器镜像，因为每个应用程序不需要和应用堆栈中的其他组件以及生产环境相组合。在构建/发布时制作镜像可以保证开发环境和生产环境的一致性。同样，容器比虚拟机更加透明，这有利于监控和管理。当容器内进程的声明周期由基础设施而不是隐藏在容器内的管理器管理时，容器的优势更加明显。最后，一个应用一个容器，管理容器和管理应用部署几乎等价。
+
+容器益处总结：
+
+- 应用创建和部署更加敏捷。和VM镜像相比，容器镜像的构建更加简单高效。
+- 持续开发、集成和部署。
+- 开发运维分离。
+- 可监控性。
+- 开发、测试、部署和生产环境一致性。
+- 跨云和OS移植。
+- 以应用为中心的管理。
+- 松耦合、分布式、弹性和微服务。
+- 资源隔离。
+- 资源高利用率。
+
+
 ## Kubernetes和K8s是什么含义？
 
 ~~The name **Kubernetes** originates from Greek, meaning *helmsman* or *pilot*, and is the root of *governor* and [cybernetic](http://www.etymonline.com/index.php?term=cybernetics). *K8s* is an abbreviation derived by replacing the 8 letters “ubernete” with “8”.~~
