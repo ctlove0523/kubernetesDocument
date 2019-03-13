@@ -21,7 +21,7 @@ Master components can be run on any machine in the cluster. However, for simplic
 
 主要组件可以运行在集群中的任何机器之上。但是，为了简单起见，通常配置脚本在同一台机器上启动所有主要组件，而且不在该机器上运行用户的容器。
 
-##@ kube-apiserver
+### kube-apiserver
 
 Component on the master that exposes the Kubernetes API. It is the front-end for the Kubernetes control plane.
 
@@ -29,7 +29,7 @@ It is designed to scale horizontally – that is, it scales by deploying more in
 
 暴露Kubernetes API的主要组件。kube-apiserver 是Kubernetes集群的前端控制平面。kube-apiserver可以通过增加实例来实现水平扩展。
 
-##@ etcd
+### etcd
 
 Consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.
 
@@ -37,7 +37,7 @@ Always have a backup plan for etcd’s data for your Kubernetes cluster. For in-
 
 etcd是一种一致性、高可用的键值存储系统，Kubernetes用来存储所有集群数据。你的Kubernetes集群中的etcd应当有备份计划。有关etcd更深入的内容参考etcd documentation.
 
-##@ kube-scheduler
+### kube-scheduler
 
 Component on the master that watches newly created pods that have no node assigned, and selects a node for them to run on.
 
@@ -45,7 +45,7 @@ Factors taken into account for scheduling decisions include individual and colle
 
 监控为分配节点的新创建Pod，并选择一个合适的节点运行pod。调度需要考虑一下因素：集群资源、硬件/软件/策略约束、亲和/反亲和配置、数据位置、负载间干扰和调度的时间限制。
 
-##@ kube-controller-manager
+### kube-controller-manager
 
 Component on the master that runs controllers.
 
