@@ -12,33 +12,31 @@ Kubernetes还根据API资源存储其序列化状态（当前在etcd中）。
 
 Kubernetes本身被分解为多个组件，通过其API进行交互。
 
-- [API changes](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-changes)
-- [OpenAPI and Swagger definitions](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#openapi-and-swagger-definitions)
-- [API versioning](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-versioning)
-- [API groups](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-groups)
-- [Enabling API groups](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#enabling-api-groups)
-- [Enabling resources in the groups](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#enabling-resources-in-the-groups)
+- API changes
+- OpenAPI and Swagger definitions
+- API versioning
+- API groups
+- Enabling API groups
+- Enabling resources in the groups
 
 ## API changes
 
-In our experience, any system that is successful needs to grow and change as new use cases emerge or existing ones change. Therefore, we expect the Kubernetes API to continuously change and grow. However, we intend to not break compatibility with existing clients, for an extended period of time. In general, new API resources and new resource fields can be expected to be added frequently. Elimination of resources or fields will require following the [API deprecation policy](https://kubernetes.io/docs/reference/using-api/deprecation-policy/).
-
-What constitutes a compatible change and how to change the API are detailed by the [API change document](https://git.k8s.io/community/contributors/devel/api_changes.md).
+以我们的经验，任何成功的系统都需要随着新场景的出现或现有的变化而成长和变化。因此，我们希望Kubernetes 的API可以一致不断的变化和成长。但是，在未来相当长的一段时间内，我们不打算破坏Kubernetes和现有客户端之间的兼容性。通常，增加新的API资源和资源字段是频繁发生的。删除API资源或资源字段需要遵从以下[API废弃策略](https://kubernetes.io/docs/reference/using-api/deprecation-policy/)。
 
 ## OpenAPI and Swagger definitions
 
-Complete API details are documented using [OpenAPI](https://www.openapis.org/).
+完整的API详细信息参考 [OpenAPI](https://www.openapis.org/).
 
-Starting with Kubernetes 1.10, the Kubernetes API server serves an OpenAPI spec via the `/openapi/v2` endpoint. The requested format is specified by setting HTTP headers:
+从Kubernetes 1.10版本开始，Kubernetes API服务器通过`/openapi /v2` 端点提供OpenAPI规范。请求的格式通过HTTP头设置：
 
-| Header          | Possible Values                                              |
+| Header          | 可选值                                                       |
 | --------------- | ------------------------------------------------------------ |
-| Accept          | `application/json`, `application/com.github.proto-openapi.spec.v2@v1.0+protobuf` (the default content-type is `application/json` for `*/*` or not passing this header) |
+| Accept          | `application/json`, `application/com.github.proto-openapi.spec.v2@v1.0+protobuf` (默认的格式为 `application/json` 对`*/*` 的请求不要使用这个头选项) |
 | Accept-Encoding | `gzip` (not passing this header is acceptable)               |
 
-Prior to 1.14, format-separated endpoints (`/swagger.json`, `/swagger-2.0.0.json`, `/swagger-2.0.0.pb-v1`, `/swagger-2.0.0.pb-v1.gz`) serve the OpenAPI spec in different formats. These endpoints are deprecated, and will be removed in Kubernetes 1.14.
+在1.14之前，格式分离的端点（`/swagger.json`,`/swagger-2.0.0.json`,`/swagger-2.0.0.pb-v1`,`/swagger-2.0.0.pb-v1.gz`）为OpenAPI提供不同格式的规范服务。 这些端点已弃用，将在Kubernetes 1.14中删除。
 
-**Examples of getting OpenAPI spec**:
+**获取OPEAPI规范示例**:
 
 | Before 1.10                 | Starting with Kubernetes 1.10                                |
 | --------------------------- | ------------------------------------------------------------ |
@@ -46,57 +44,55 @@ Prior to 1.14, format-separated endpoints (`/swagger.json`, `/swagger-2.0.0.json
 | GET /swagger-2.0.0.pb-v1    | GET /openapi/v2 **Accept**: application/com.github.proto-openapi.spec.v2@v1.0+protobuf |
 | GET /swagger-2.0.0.pb-v1.gz | GET /openapi/v2 **Accept**: application/com.github.proto-openapi.spec.v2@v1.0+protobuf **Accept-Encoding**: gzip |
 
-Kubernetes implements an alternative Protobuf based serialization format for the API that is primarily intended for intra-cluster communication, documented in the [design proposal](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/protobuf.md) and the IDL files for each schema are located in the Go packages that define the API objects.
+Kubernetes为API实现了另一种基于Protobuf的序列化格式，主要用于群集内通信，设计文档参考 [design proposal](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/protobuf.md) ，每个模式的IDL文件都位于定义API对象的Go包中。
 
-Prior to 1.14, the Kubernetes apiserver also exposes an API that can be used to retrieve the [Swagger v1.2](http://swagger.io/) Kubernetes API spec at `/swaggerapi`. This endpoint is deprecated, and will be removed in Kubernetes 1.14.
+在1.14之前，Kubernetes apiserver还公开了一个API，可用于检索`/swaggerapi` 上的Swagger v1.2 Kubernetes API规范。 该端点已弃用，将在Kubernetes 1.14中删除。
 
 ## API versioning
 
-To make it easier to eliminate fields or restructure resource representations, Kubernetes supports multiple API versions, each at a different API path, such as `/api/v1` or `/apis/extensions/v1beta1`.
+为了更容易删除字段或重构资源表示，Kubernetes支持多个API版本，每个版本都在不同的路径上，比如  `/api/v1` 或 `/apis/extensions/v1beta1`.
 
-We chose to version at the API level rather than at the resource or field level to ensure that the API presents a clear, consistent view of system resources and behavior, and to enable controlling access to end-of-lifed and/or experimental APIs. The JSON and Protobuf serialization schemas follow the same guidelines for schema changes - all descriptions below cover both formats.
+我们选择在API级别而不是在资源或字段级别进行版本化，以确保API提供清晰，一致的系统资源和行为视图，并允许控制对生命末端和/或实验API的访问。 JSON和Protobuf序列化模式遵循相同的模式更改指南 - 以下所有描述都涵盖两种格式。
 
-Note that API versioning and Software versioning are only indirectly related. The [API and release versioning proposal](https://git.k8s.io/community/contributors/design-proposals/release/versioning.md) describes the relationship between API versioning and software versioning.
+注意API的版本和软件版本仅间接关联。 [API and release versioning proposal](https://git.k8s.io/community/contributors/design-proposals/release/versioning.md)  描述API版本和软件版本之间的关系。
 
-Different API versions imply different levels of stability and support. The criteria for each level are described in more detail in the [API Changes documentation](https://git.k8s.io/community/contributors/devel/api_changes.md#alpha-beta-and-stable-versions). They are summarized here:
+不同版本的API拥有不同的稳定性和支持。 [API Changes documentation](https://git.k8s.io/community/contributors/devel/api_changes.md#alpha-beta-and-stable-versions) 对每个级别的API进行了更加详细的描述，总结如下：
 
-- Alpha level:
-  - The version names contain `alpha` (e.g. `v1alpha1`).
-  - May be buggy. Enabling the feature may expose bugs. Disabled by default.
-  - Support for feature may be dropped at any time without notice.
-  - The API may change in incompatible ways in a later software release without notice.
-  - Recommended for use only in short-lived testing clusters, due to increased risk of bugs and lack of long-term support.
-- Beta level:
-  - The version names contain `beta` (e.g. `v2beta3`).
-  - Code is well tested. Enabling the feature is considered safe. Enabled by default.
-  - Support for the overall feature will not be dropped, though details may change.
-  - The schema and/or semantics of objects may change in incompatible ways in a subsequent beta or stable release. When this happens, we will provide instructions for migrating to the next version. This may require deleting, editing, and re-creating API objects. The editing process may require some thought. This may require downtime for applications that rely on the feature.
-  - Recommended for only non-business-critical uses because of potential for incompatible changes in subsequent releases. If you have multiple clusters which can be upgraded independently, you may be able to relax this restriction.
-  - **Please do try our beta features and give feedback on them! Once they exit beta, it may not be practical for us to make more changes.**
-- Stable level:
-  - The version name is `vX` where `X` is an integer.
-  - Stable versions of features will appear in released software for many subsequent versions.
+- Alpha 级:
+  - 版本名字包含 `alpha` (例如 `v1alpha1`).
+  - 可能充满bug. 启用该功能可能会暴露错误。 默认情况下禁用.
+  - 支持的功能可能在没有通知的条件下在任意时间被删除.
+  - 在没有通知的条件下，后续版本可能对其做不兼容的更改。
+  - 由于错误风险增加以及没有长期支持，建议仅用于短期测试集群。
+- Beta 级:
+  - 版本名字包含 `beta` (例如 `v2beta3`).
+  - 代码经过了很好的测试，实现的功能比较安全，默认开启。
+  - 支持的所有功能都不会被删除，但是细节可能被修改。
+  - 在接下来的beta或稳定版本中对象的模式或语义可能进行兼容性修改。出现这种情况时，我们会提供纸雕来向下一个版本合并。这可能需要删除，编辑或重新创建API对象。修改的过程可能需要一些思考。对于特定的功能，可能要求应用下线。
+  - 因为后续版本中可能存在不兼容的更改，建议仅用在非商业用途。如果你拥有多个集群可以互相独立升级，你可以不用考虑这一点。
+  - **欢迎使用并提供反馈，一旦API从beta版本退出，我们可能无法进行更多的修改**
+- Stable 级:
+  - 版本命名为`vx` 其中`x` 为表示版本的数字。
+  - 稳定版本API支持的功能在接下来的多个版本中都会被支持。
 
 ## API groups
 
-To make it easier to extend the Kubernetes API, we implemented [*API groups*](https://git.k8s.io/community/contributors/design-proposals/api-machinery/api-group.md). The API group is specified in a REST path and in the `apiVersion` field of a serialized object.
+为了更加容易扩展Kubernetes的API，我们实现了API groups。API组在REST路径和序列化对象的apiVersion字段中指定。
 
-Currently there are several API groups in use:
+目前在使用中的API groups 有多种:
 
-1. The *core* group, often referred to as the *legacy group*, is at the REST path `/api/v1` and uses `apiVersion: v1`.
-2. The named groups are at REST path `/apis/$GROUP_NAME/$VERSION`, and use `apiVersion: $GROUP_NAME/$VERSION` (e.g. `apiVersion: batch/v1`). Full list of supported API groups can be seen in [Kubernetes API reference](https://kubernetes.io/docs/reference/).
+1. 核心API组，经常也被称遗留组，REST的路径为`/api/v1` 并使用 `apiVersion: v1`。
+2. REST 路径 `/apis/$GROUP_NAME/$VERSION`, 使用 `apiVersion: $GROUP_NAME/$VERSION` 的API组
 
-There are two supported paths to extending the API with [custom resources](https://kubernetes.io/docs/concepts/api-extension/custom-resources/):
+使用自定义资源扩展API有两种受支持的路径：
 
-1. [CustomResourceDefinition](https://kubernetes.io/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/) is for users with very basic CRUD needs.
-2. Users needing the full set of Kubernetes API semantics can implement their own apiserver and use the [aggregator](https://kubernetes.io/docs/tasks/access-kubernetes-api/configure-aggregation-layer/) to make it seamless for clients.
+1. [CustomResourceDefinition](https://kubernetes.io/docs/tasks/access-kubernetes-api/extend-api-custom-resource-definitions/) 主要为用户定义基本的CRUD操作。
+2. 如果用户需要Kubernetes API的所有语义，可以自己实现apiserver，并使用aggregator将其开放给客户端。
 
 ## Enabling API groups
 
-Certain resources and API groups are enabled by default. They can be enabled or disabled by setting `--runtime-config` on apiserver. `--runtime-config` accepts comma separated values. For ex: to disable batch/v1, set `--runtime-config=batch/v1=false`, to enable batch/v2alpha1, set `--runtime-config=batch/v2alpha1`. The flag accepts comma separated set of key=value pairs describing runtime configuration of the apiserver.
-
-IMPORTANT: Enabling or disabling groups or resources requires restarting apiserver and controller-manager to pick up the `--runtime-config` changes.
+某些资源和API组默认开启。可以通过在apiserver上设置 `--runtime-config` （接受逗号分隔的参数） 启用或关闭该功能。开启或关闭需要重启apiserver和控制器管理器来重新读取`--runtime-config` 的值。
 
 ## Enabling resources in the groups
 
-DaemonSets, Deployments, HorizontalPodAutoscalers, Ingresses, Jobs and ReplicaSets are enabled by default. Other extensions resources can be enabled by setting `--runtime-config` on apiserver. `--runtime-config` accepts comma separated values. For example: to disable deployments and ingress, set `--runtime-config=extensions/v1beta1/deployments=false,extensions/v1beta1/ingresses=false`
+DaemonSets, Deployments, HorizontalPodAutoscalers, Ingresses, Jobs 和 ReplicaSets 默认开启API 组功能。其他扩展资源需要在apiserver上进行配置开启或关闭。
