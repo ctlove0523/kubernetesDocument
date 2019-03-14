@@ -8,6 +8,12 @@ In achieves high utilization by combining admission control,efficient task-packi
 
 We present a summary of the Borg system architecture and features,important design decision,q quantitative analysis of some of its policy decision,and a qualitative examination of lessons learned from a decade of operational experience with it.
 
+Google的Borg系统是一个集群管理器，可以运行来自数千个不同的应用程序中的数十万个作业，这些作业分布在多个集群中，每个集群最多有数万台机器。
+
+Borg通过准入控制，高效的任务打包，over-commitment和进程及性能隔离的机制共享实现更高的利用率。Borg通过最大限度的缩短故障恢复时间，通过调度降低级联故障的概率来为具有运行时功能的应用提供搞可用性。Borg通过提供声明性作业规范语言，集成名称服务，实时作业监控以及分析和模拟系统行为的工具，简化了用户的工作。
+
+在本文中我们重点概述Borg系统的架构和特性，重要设计决策，部分决策的定量分析，以及运营Borg数十年的经验教训。
+
 ### 1. Introduction
 
 The cluster management system we internally call Borg admits,schedules, starts, restarts, and monitors the full range of applications that Google runs. This paper explains how.Borg provides three main benefits: it (1) hides the details of resource management and failure handling so its users can focus on application development instead; (2) operates with very high reliability and availability, and supports applications
