@@ -1,16 +1,16 @@
 # The Kubernetes API
 
-Overall API conventions are described in the [API conventions doc](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md).
+总体的API约束参考 API conventions doc.
 
-API endpoints, resource types and samples are described in [API Reference](https://kubernetes.io/docs/reference).
+API endpoints，资源类型和样例参考  API Reference.
 
-Remote access to the API is discussed in the [Controlling API Access doc](https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/).
+API远程访问参考 Controlling API Access doc.
 
-The Kubernetes API also serves as the foundation for the declarative configuration schema for the system. The [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)command-line tool can be used to create, update, delete, and get API objects.
+Kubernetes API还可用作系统声明性配置架构的基础。 kubectl命令行工具可用于创建，更新，删除和获取API对象。
 
-Kubernetes also stores its serialized state (currently in [etcd](https://coreos.com/docs/distributed-configuration/getting-started-with-etcd/)) in terms of the API resources.
+Kubernetes还根据API资源存储其序列化状态（当前在etcd中）。
 
-Kubernetes itself is decomposed into multiple components, which interact through its API.
+Kubernetes本身被分解为多个组件，通过其API进行交互。
 
 - [API changes](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-changes)
 - [OpenAPI and Swagger definitions](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#openapi-and-swagger-definitions)
