@@ -1,6 +1,6 @@
 # Large-scale cluster management at Google with Borg
 
-## Abstract
+## 摘要
 
 Google's Borg system is a cluster manager that runs hundreds of thousands of jobs，from many thousands of different applications, across a number of clusters each with up to tens of thousands of machines.
 
@@ -14,32 +14,51 @@ Borg通过准入控制，高效的任务打包，over-commitment和进程及性�
 
 在本文中我们重点概述Borg系统的架构和特性，重要设计决策，部分决策的定量分析，以及运营Borg数十年的经验教训。
 
-### 1. Introduction
+### 1. 引言
 
-The cluster management system we internally call Borg admits,schedules, starts, restarts, and monitors the full range of applications that Google runs. This paper explains how.Borg provides three main benefits: it (1) hides the details of resource management and failure handling so its users can focus on application development instead; (2) operates with very high reliability and availability, and supports applications
-that do the same; and (3) lets us run workloads across tens of thousands of machines effectively. Borg is not the first system to address these issues, but it’s one of the few operating at this scale, with this degree of resiliency and completeness. This paper is organized around these topics, concluding with a set of qualitative observations we have made from operating Borg in production for more than a decade.
+The cluster management system we internally call Borg admits,schedules, starts, restarts, and monitors the full range of applications that Google runs. This paper explains how.
+
+Borg provides three main benefits: it (1) hides the details of resource management and failure handling so its users can focus on application development instead; (2) operates with very high reliability and availability, and supports applications that do the same; and (3) lets us run workloads across tens of thousands of machines effectively. Borg is not the first system to address these issues, but it’s one of the few operating at this scale, with this degree of resiliency and completeness. This paper is organized around these topics, concluding with a set of qualitative observations we have made from operating Borg in production for more than a decade.
 
 
 
-## 2. The user perspective
+Google内部称为Borg的集群管理系统负责Google内部允许的所有应用的admits、调度、启动、重启和监控。在这篇论文中我们将解释Brog如何做到的。
+
+Borg主要提供三个益处：
+
+1. 屏蔽资源管理和错误处理的细节，让用户可以专注应用的开发。
+2. 自身具有高可用高可靠，同时支持应用的高可用和高可靠。
+3. 支持应用跨数前台机器高效运行。
+
+Borg不是第一个解决这些问题的系统，但是Borg是少数几个以这种规模运行的系统之一，拥有相当高的韧性和完整性。本文围绕这些主题阻止，包括Borg在生产环境十多年来所做的一系列定性观察。
+
+## 2. 用户视角
 
 Borg’s users are Google developers and system administrators (site reliability engineers or SREs) that run Google’s applications and services. Users submit their work to Borg in the form of jobs, each of which consists of one or more tasks that all run the same program (binary). Each job runs in one Borg cell, a set of machines that are managed as a unit. The remainder of this section describes the main features exposed in the user view of Borg.
 
-### 2.1 The workload
+Borg的用户是运行Google应用和服务的Google开发人员和系统管理员（站点可靠性工程师或者SRE）。用户以job的形式向Borg提供自己的工作，每个job都包含一个或多个运行在相同程序（二进制）的任务。每个job运行在Borg的一个cell中，一个cell包含一组机器，cell是Borg管理资源的基本单位。本章的其余部分将以用户视角介绍Borg的主要功能。
+
+### 2.1 工作负载
 
 Borg cells run a heterogenous workload with two main parts. The first is long-running services that should “never” go down, and handle short-lived latency-sensitive requests (a few µs to a few hundred ms). Such services are used for end-user-facing products such as Gmail, Google Docs, and web search, and for internal infrastructure services (e.g., BigTable). The second is batch jobs that take from a few seconds to a few days to complete; these are much less sensitive to short-term performance fluctuations. The workload
-mix varies across cells, which run different mixes of applications depending on their major tenants (e.g., some cells are quite batch-intensive), and also varies over time: batch jobscome and go, and many end-user-facing service jobs see a diurnal usage pattern. Borg is required to handle all these cases equally well.
+mix varies across cells, which run different mixes of applications depending on their major tenants (e.g., some cells are quite batch-intensive), and also varies over time: batch jobs come and go, and many end-user-facing service jobs see a diurnal usage pattern. Borg is required to handle all these cases equally well.
 
-A representative Borg workload can be found in a publiclyavailable month-long trace from May 2011 [80], which has been extensively analyzed (e.g., [68] and [1, 26, 27, 57]).
+Borg cell运行的异质工作负载主要有两部分。第一部分是长时间运行的服务，这些服务永远不能下线，并处理对低延迟敏感的请求（几us到几百ms）。这些服务用于面向用户的产品（例如,Gmail，Google Docs，Web搜索）和内部基础设施服务（比如，BigTable）。第二部分是批量jobs，这些jobs完成需要的时间从几秒到几天，这些jobs对短期的性能波动不敏感。每个cell运行不同的工作负载，根据该cell的主要租户运行不同的应用组合（比如有些cell主要运行批量job），不同时间运行的负载也不一样：批量jobs来去匆匆，许多面向终端用户的job也有昼夜模式。Borg必须同样的处理这些所有的场景。
 
+A representative Borg workload can be found in a publicly-available month-long trace from May 2011 [80], which has been extensively analyzed (e.g., [68] and [1, 26, 27, 57]).
 
+> 不是阐述Borg的一部分，省略翻译。
 
 Many application frameworks have been built on top of Borg over the last few years, including our internal MapReduce system [23], FlumeJava [18], Millwheel [3], and Pregel [59]. Most of these have a controller that submits a master job and one or more worker jobs; the first two play a similar role to YARN’s application manager [76]. Our distributed storage systems such as GFS [34] and its successor CFS, Bigtable [19], and Megastore [8] all run on Borg.
+
+在过去的几年中，许多应用程序框架都是构建于Borg之上，包括Google内部的MapReduce系统，FlumeJava，Millwheel和Pregel。其中大多数框架都有提交一个主要job和一个或多个worker job的控制器；前两个应用框架和YARN的应用管理器相似。Google的分布式存储系统，比如GFS和后继CFS，Bigtable和Megastor都运行在Borg之上。
 
 For this paper, we classify higher-priority Borg jobs as “production” (prod) ones, and the rest as “non-production”(non-prod). Most long-running server jobs are prod; most batch jobs are non-prod. In a representative cell, prod jobs are allocated about 70% of the total CPU resources and represent
 about 60% of the total CPU usage; they are allocated about 55% of the total memory and represent about 85% of the total memory usage. The discrepancies between allocation and usage will prove important in §5.5.
 
-### 2.2 Clusters and cells
+在本文中，将优先级高的Borg 作业归类为“生产”作业（prod），其余的归类为“非生产”作业（non-prod）。大多数长时间运行的作业是生产作业，大多数的批量作业是非生产作业。在具有代表性的cell中，生产作业被分配了70%的CPU资源，并占总CPU使用了的60%；分配了55%的内存，内存使用占总的内存使用的85%。分配和使用之间的差异将在5.5中证明。
+
+### 2.2 集群 和 cells
 
 The machines in a cell belong to a single cluster, defined by the high-performance datacenter-scale network fabric that connects them. A cluster lives inside a single datacenter building, and a collection of buildings makes up a site.1 A cluster usually hosts one large cell and may have a few smaller-scale test or special-purpose cells. We assiduously avoid any single point of failure.
 
