@@ -1,0 +1,818 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Kubernetes Components · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="api.html" />
+    
+    
+    <link rel="prev" href="kubernetes.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Concepts
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" >
+            
+                <span>
+            
+                    
+                    Overview
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="kubernetes.html">
+            
+                <a href="kubernetes.html">
+            
+                    
+                    What is Kubernetes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.1.2" data-path="components.html">
+            
+                <a href="components.html">
+            
+                    
+                    Kubernetes Components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.3" data-path="api.html">
+            
+                <a href="api.html">
+            
+                    
+                    The Kubernetes API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4" >
+            
+                <span>
+            
+                    
+                    Objects
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.4.1" data-path="Objects/objs.html">
+            
+                <a href="Objects/objs.html">
+            
+                    
+                    Understanding Kubernetes Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.2" data-path="Objects/names.html">
+            
+                <a href="Objects/names.html">
+            
+                    
+                    Names
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.3" data-path="Objects/namespaces.html">
+            
+                <a href="Objects/namespaces.html">
+            
+                    
+                    Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.4" data-path="Objects/labels.html">
+            
+                <a href="Objects/labels.html">
+            
+                    
+                    Labels and Selectors
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.5" data-path="Objects/annotations.html">
+            
+                <a href="Objects/annotations.html">
+            
+                    
+                    Annotations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.6" data-path="Objects/field.html">
+            
+                <a href="Objects/field.html">
+            
+                    
+                    Field Selectors
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.7" data-path="Objects/recLabels.html">
+            
+                <a href="Objects/recLabels.html">
+            
+                    
+                    Recommended Labels
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5" >
+            
+                <span>
+            
+                    
+                    manage
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.5.1" data-path="manage/kom.html">
+            
+                <a href="manage/kom.html">
+            
+                    
+                    Kubernetes Object Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.2" data-path="manage/commans.html">
+            
+                <a href="manage/commans.html">
+            
+                    
+                    Managing Kubernetes Objects Using Imperative Commands
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.3" data-path="manage/configuration.html">
+            
+                <a href="manage/configuration.html">
+            
+                    
+                    Imperative Management of Kubernetes Objects Using Configuration Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.4" data-path="manage/declarative.html">
+            
+                <a href="manage/declarative.html">
+            
+                    
+                    Declarative Management of Kubernetes Objects Using Configuration Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" >
+            
+                <span>
+            
+                    
+                    Policies
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../Policies/resourceQuotas.html">
+            
+                <a href="../Policies/resourceQuotas.html">
+            
+                    
+                    Resource Quotas
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../Policies/podSecPolicy.html">
+            
+                <a href="../Policies/podSecPolicy.html">
+            
+                    
+                    Pod Security Policies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    Configuration
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../Configuration/configureBestPractices.html">
+            
+                <a href="../Configuration/configureBestPractices.html">
+            
+                    
+                    Configuration Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../Configuration/containerResources.html">
+            
+                <a href="../Configuration/containerResources.html">
+            
+                    
+                    Managing Compute Resources for Containers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="../Configuration/podAssign.html">
+            
+                <a href="../Configuration/podAssign.html">
+            
+                    
+                    Assigning Pods to Nodes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="../Configuration/tt.html">
+            
+                <a href="../Configuration/tt.html">
+            
+                    
+                    Taints and Tolerations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="../Configuration/secrets.html">
+            
+                <a href="../Configuration/secrets.html">
+            
+                    
+                    Secrets
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="../Configuration/ocaukf.html">
+            
+                <a href="../Configuration/ocaukf.html">
+            
+                    
+                    Organizing Cluster Access Using kubeconfig Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.7" data-path="../Configuration/ppp.html">
+            
+                <a href="../Configuration/ppp.html">
+            
+                    
+                    Pod Priority and Preemption
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" >
+            
+                <span>
+            
+                    
+                    Containers
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Containers/images.html">
+            
+                <a href="../Containers/images.html">
+            
+                    
+                    Images
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Containers/envs.html">
+            
+                <a href="../Containers/envs.html">
+            
+                    
+                    Container Environment Variables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Containers/runtime.html">
+            
+                <a href="../Containers/runtime.html">
+            
+                    
+                    Runtime Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Containers/lifecycle.html">
+            
+                <a href="../Containers/lifecycle.html">
+            
+                    
+                    Container Lifecycle Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../related.html">
+            
+                <a href="../../related.html">
+            
+                    
+                    Related
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../Related/borg.html">
+            
+                <a href="../../Related/borg.html">
+            
+                    
+                    Borg
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Kubernetes Components</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="kubernetes-components">Kubernetes Components</h1>
+<p>&#x672C;&#x6587;&#x91CD;&#x70B9;&#x4ECB;&#x7ECD;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x53EF;&#x7528;Kubernetes&#x96C6;&#x7FA4;&#x9700;&#x8981;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x7EC4;&#x4EF6;&#xFF1A;</p>
+<ul>
+<li>&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;</li>
+<li>&#x8282;&#x70B9;&#x7EC4;&#x4EF6; </li>
+<li>&#x63D2;&#x4EF6;</li>
+</ul>
+<h2 id="&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;">&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;</h2>
+<p>&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;Kubernetes&#x96C6;&#x7FA4;&#x7684;&#x63A7;&#x5236;&#x5E73;&#x9762;&#x3002;&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;&#x8D1F;&#x8D23;&#x96C6;&#x7FA4;&#x5168;&#x5C40;&#x51B3;&#x7B56;&#xFF08;&#x6BD4;&#x5982;&#xFF0C;&#x8C03;&#x5EA6;&#xFF09;&#xFF0C;&#x68C0;&#x6D4B;&#x5E76;&#x54CD;&#x5E94;&#x96C6;&#x7FA4;&#x4E8B;&#x4EF6;&#xFF08;&#x5F53;&#x526F;&#x672C;&#x63A7;&#x5236;&#x5668;&#x7684;&#x526F;&#x672C;&#x5B57;&#x6BB5;&#x7684;&#x503C;&#x4E0D;&#x6EE1;&#x8DB3;&#x671F;&#x671B;&#x65F6;&#xFF0C;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x65B0;&#x7684;Pod&#xFF09;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x7684;&#x4EFB;&#x4F55;&#x673A;&#x5668;&#x4E4B;&#x4E0A;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x4E3A;&#x4E86;&#x7B80;&#x5355;&#x8D77;&#x89C1;&#xFF0C;&#x901A;&#x5E38;&#x914D;&#x7F6E;&#x811A;&#x672C;&#x5728;&#x540C;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x542F;&#x52A8;&#x6240;&#x6709;&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;&#xFF0C;&#x800C;&#x4E14;&#x4E0D;&#x5728;&#x8BE5;&#x673A;&#x5668;&#x4E0A;&#x8FD0;&#x884C;&#x7528;&#x6237;&#x7684;&#x5BB9;&#x5668;&#x3002;</p>
+<h3 id="kube-apiserver">kube-apiserver</h3>
+<hr>
+<p>&#x66B4;&#x9732;Kubernetes API&#x7684;&#x4E3B;&#x8981;&#x7EC4;&#x4EF6;&#x3002;kube-apiserver &#x662F;Kubernetes&#x96C6;&#x7FA4;&#x7684;&#x524D;&#x7AEF;&#x63A7;&#x5236;&#x5E73;&#x9762;&#x3002;kube-apiserver&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x589E;&#x52A0;&#x5B9E;&#x4F8B;&#x6765;&#x5B9E;&#x73B0;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#x3002;</p>
+<h3 id="etcd">etcd</h3>
+<hr>
+<p>etcd&#x662F;&#x4E00;&#x79CD;&#x4E00;&#x81F4;&#x6027;&#x3001;&#x9AD8;&#x53EF;&#x7528;&#x7684;&#x952E;&#x503C;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#xFF0C;Kubernetes&#x7528;&#x6765;&#x5B58;&#x50A8;&#x6240;&#x6709;&#x96C6;&#x7FA4;&#x6570;&#x636E;&#x3002;&#x4F60;&#x7684;Kubernetes&#x96C6;&#x7FA4;&#x4E2D;&#x7684;etcd&#x5E94;&#x5F53;&#x6709;&#x5907;&#x4EFD;&#x8BA1;&#x5212;&#x3002;&#x6709;&#x5173;etcd&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x5185;&#x5BB9;&#x53C2;&#x8003;etcd documentation.</p>
+<h3 id="kube-scheduler">kube-scheduler</h3>
+<hr>
+<p>&#x76D1;&#x63A7;&#x4E3A;&#x5206;&#x914D;&#x8282;&#x70B9;&#x7684;&#x65B0;&#x521B;&#x5EFA;Pod&#xFF0C;&#x5E76;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x5408;&#x9002;&#x7684;&#x8282;&#x70B9;&#x8FD0;&#x884C;pod&#x3002;&#x8C03;&#x5EA6;&#x9700;&#x8981;&#x8003;&#x8651;&#x4E00;&#x4E0B;&#x56E0;&#x7D20;&#xFF1A;&#x96C6;&#x7FA4;&#x8D44;&#x6E90;&#x3001;&#x786C;&#x4EF6;/&#x8F6F;&#x4EF6;/&#x7B56;&#x7565;&#x7EA6;&#x675F;&#x3001;&#x4EB2;&#x548C;/&#x53CD;&#x4EB2;&#x548C;&#x914D;&#x7F6E;&#x3001;&#x6570;&#x636E;&#x4F4D;&#x7F6E;&#x3001;&#x8D1F;&#x8F7D;&#x95F4;&#x5E72;&#x6270;&#x548C;&#x8C03;&#x5EA6;&#x7684;&#x65F6;&#x95F4;&#x9650;&#x5236;&#x3002;</p>
+<h3 id="kube-controller-manager">kube-controller-manager</h3>
+<hr>
+<p>&#x7528;&#x4E8E;&#x8FD0;&#x884C;&#x63A7;&#x5236;&#x5668;&#x7684;&#x7EC4;&#x4EF6;&#x3002;</p>
+<p>&#x4ECE;&#x903B;&#x8F91;&#x4E0A;&#x770B;&#xFF0C;&#x6BCF;&#x4E2A;&#x63A7;&#x5236;&#x5668;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F46;&#x662F;&#x4E3A;&#x4E86;&#x964D;&#x4F4E;&#x590D;&#x6742;&#x6027;&#xFF0C;&#x5B83;&#x4EEC;&#x88AB;&#x7F16;&#x8BD1;&#x5728;&#x4E00;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x4E2D;&#x5E76;&#x8FD0;&#x884C;&#x5728;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x4E2D;&#x3002;</p>
+<p>&#x5305;&#x62EC;&#x4EE5;&#x4E0B;&#x63A7;&#x5236;&#x5668;&#xFF1A;</p>
+<ul>
+<li>&#x8282;&#x70B9;&#x63A7;&#x5236;&#x5668;&#x3002;&#x68C0;&#x6D4B;&#x8282;&#x70B9;&#x6545;&#x969C;&#x5E76;&#x54CD;&#x5E94;&#x3002;</li>
+<li>&#x526F;&#x672C;&#x63A7;&#x5236;&#x5668;&#x3002;&#x8D1F;&#x8D23;&#x4E3A;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x590D;&#x5236;&#x63A7;&#x5236;&#x5668;&#x5BF9;&#x8C61;&#x7EF4;&#x62A4;&#x6B63;&#x786E;&#x6570;&#x91CF;&#x7684;pod&#x3002;</li>
+<li>&#x7AEF;&#x70B9;&#x63A7;&#x5236;&#x5668;&#x3002;&#x586B;&#x5145;&#x7AEF;&#x70B9;&#x5BF9;&#x8C61;&#xFF08;&#x6BD4;&#x5982;&#x8FDE;&#x63A5;Service&#x548C;Pod&#xFF09;</li>
+<li>&#x670D;&#x52A1;&#x5E10;&#x6237;&#x548C;&#x4EE4;&#x724C;&#x63A7;&#x5236;&#x5668;&#x3002;&#x5BF9;&#x4E8E;&#x65B0;&#x521B;&#x5EFA;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x521B;&#x5EFA;&#x9ED8;&#x8BA4;&#x8D26;&#x6237;&#x548C;API&#x8BBF;&#x95EE;&#x4EE4;&#x724C;&#x3002;</li>
+</ul>
+<h3 id="cloud-controller-manager">cloud-controller-manager</h3>
+<hr>
+<p>[cloud-controller-manager&#x8FD0;&#x884C;&#x548C;&#x5E95;&#x5C42;&#x4E91;&#x63D0;&#x4F9B;&#x5546;&#x4EA4;&#x4E92;&#x7684;&#x63A7;&#x5236;&#x5668;&#x3002;cloud-controller-manager&#x662F;Kubernetes&#x5728;1.6&#x7248;&#x672C;&#x5F15;&#x5165;&#xFF0C;&#x76EE;&#x524D;&#x8FD8;&#x662F;alpha&#x7248;&#x672C;&#x529F;&#x80FD;&#x3002;</p>
+<p>cloud-controller-manager&#x53EA;&#x5FAA;&#x73AF;&#x8C03;&#x7528;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x7279;&#x5B9A;&#x7684;&#x63A7;&#x5236;&#x5668;&#x3002;&#x4F60;&#x9700;&#x8981;&#x5728;kube-controller-manager&#x4E2D;&#x7981;&#x6B62;&#x8FD9;&#x4E9B;&#x63A7;&#x5236;&#x5668;&#x7684;&#x5FAA;&#x73AF;&#x8C03;&#x7528;&#x3002;&#x53EF;&#x4EE5;&#x5728;&#x542F;&#x52A8;kube-controller-manager&#x65F6;&#x5C06; <code>--cloud-provider</code> &#x8BBE;&#x7F6E;&#x4E3A; <code>external</code> &#x5173;&#x95ED;&#x5FAA;&#x73AF;&#x8C03;&#x7528;&#x63A7;&#x5236;&#x5668;&#x3002;</p>
+<p>cloud-controller-manager &#x5141;&#x8BB8;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x7684;&#x4EE3;&#x7801;&#x548C;Kubernetes&#x7684;&#x4EE3;&#x7801;&#x72EC;&#x7ACB;&#x53D1;&#x5C55;&#xFF0C;&#x4E0D;&#x518D;&#x4E92;&#x76F8;&#x4F9D;&#x8D56;&#x3002;&#x5728;&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;Kubernetes&#x7684;&#x6838;&#x5FC3;&#x4EE3;&#x7801;&#x4F9D;&#x8D56;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x7684;&#x7279;&#x6B8A;&#x4EE3;&#x7801;&#x6765;&#x63D0;&#x4F9B;&#x529F;&#x80FD;&#x3002;&#x5728;&#x5C06;&#x6765;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x7279;&#x6709;&#x7684;&#x4EE3;&#x7801;&#x5E94;&#x7531;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x81EA;&#x5DF1;&#x7EF4;&#x62A4;&#xFF0C;&#x5728;&#x5141;&#x8BB8;Kubernetes&#x65F6;&#x4E0E;cloud-controller-manager&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x63A7;&#x5236;&#x5668;&#x4F9D;&#x8D56;&#x4E8E;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#xFF1A;</p>
+<ul>
+<li>&#x8282;&#x70B9;&#x63A7;&#x5236;&#x5668;&#x3002;&#x8282;&#x70B9;&#x505C;&#x6B62;&#x54CD;&#x5E94;&#x65F6;&#xFF0C;&#x68C0;&#x67E5;&#x8282;&#x70B9;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x4ECE;&#x4E91;&#x5220;&#x9664;&#x3002;</li>
+<li>&#x8DEF;&#x7531;&#x63A7;&#x5236;&#x5668;&#x3002;&#x8BBE;&#x7F6E;&#x5E95;&#x5C42;&#x4E91;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x8DEF;&#x7531;&#x3002;</li>
+<li>&#x670D;&#x52A1;&#x63A7;&#x5236;&#x5668;&#x3002;&#x521B;&#x5EFA;&#xFF0C;&#x66F4;&#x65B0;&#x548C;&#x5220;&#x9664;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x5668;&#x3002;</li>
+<li>&#x5377;&#x63A7;&#x5236;&#x5668;&#x3002;&#x521B;&#x5EFA;&#xFF0C;&#x9644;&#x52A0;&#xFF0C;&#x6302;&#x8F7D;&#x5377;&#xFF0C;&#x5E76;&#x548C;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x4EA4;&#x4E92;&#x4EE5;&#x534F;&#x8C03;&#x5377;&#x3002;</li>
+</ul>
+<h2 id="&#x8282;&#x70B9;&#x7EC4;&#x4EF6;">&#x8282;&#x70B9;&#x7EC4;&#x4EF6;</h2>
+<p>&#x8282;&#x70B9;&#x7EC4;&#x4EF6;&#x5141;&#x8BB8;&#x5728;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x7EF4;&#x62A4;&#x8FD0;&#x884C;&#x7684;pods&#x5E76;&#x4E3A;Kubernetes&#x63D0;&#x4F9B;&#x8FD0;&#x884C;&#x65F6;&#x73AF;&#x5883;&#x3002;</p>
+<h3 id="kubelet">kubelet</h3>
+<hr>
+<p>&#x8FD0;&#x884C;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x7684;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x3002;kubelet&#x786E;&#x4FDD;pod&#x5185;&#x7684;&#x5BB9;&#x5668;&#x8FD0;&#x884C;&#x3002;</p>
+<p>kubelet&#x62E5;&#x6709;&#x4E00;&#x7CFB;&#x5217;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x673A;&#x5236;&#x63D0;&#x4F9B;&#x7684;PodSpecs&#xFF0C;&#x5E76;&#x786E;&#x4FDD;&#x8FD9;&#x4E9B;PodSpecs&#x4E2D;&#x63CF;&#x8FF0;&#x7684;&#x5BB9;&#x5668;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x4E14;&#x5065;&#x5EB7;&#x3002;kubelet&#x4E0D;&#x4F1A;&#x7BA1;&#x7406;&#x975E;Kubernetes&#x521B;&#x5EFA;&#x7684;&#x5BB9;&#x5668;&#x3002;</p>
+<h3 id="kube-proxy">kube-proxy</h3>
+<p><a href="https://kubernetes.io/docs/admin/kube-proxy/" target="_blank">kube-proxy</a> enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding.</p>
+<p>kube-proxy&#x901A;&#x8FC7;&#x7EF4;&#x62A4;&#x4E3B;&#x673A;&#x4E0A;&#x7684;&#x7F51;&#x7EDC;&#x89C4;&#x5219;&#x5E76;&#x6267;&#x884C;&#x8FDE;&#x63A5;&#x8F6C;&#x53D1;&#x6765;&#x652F;&#x6301;Kubernetes&#x670D;&#x52A1;&#x62BD;&#x8C61;&#x3002;</p>
+<h3 id="container-runtime">Container Runtime</h3>
+<hr>
+<p>&#x5BB9;&#x5668;&#x8FD0;&#x884C;&#x65F6;&#x73AF;&#x5883;&#x662F;&#x8D1F;&#x8D23;&#x8FD0;&#x884C;&#x5BB9;&#x5668;&#x7684;&#x8F6F;&#x4EF6;&#xFF0C;Kubernetes&#x652F;&#x6301;&#x591A;&#x79CD;&#x8FD0;&#x884C;&#x65F6;&#x73AF;&#x5883;&#xFF1A;Docker&#xFF0C;containerd&#xFF0C;cri-o&#xFF0C;rktlet&#x548C;&#x4EFB;&#x4F55; <a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md" target="_blank">Kubernetes CRI (Container Runtime Interface)</a>.&#x5B9E;&#x73B0;</p>
+<h2 id="&#x63D2;&#x4EF6;">&#x63D2;&#x4EF6;</h2>
+<p>&#x63D2;&#x4EF6;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x96C6;&#x7FA4;&#x67D0;&#x79CD;&#x529F;&#x80FD;&#x7684;pod&#x6216;&#x670D;&#x52A1;&#x3002;Pod&#x53EF;&#x80FD;&#x7531;Depoyment&#xFF0C;ReplicationController&#x7B49;&#x7BA1;&#x7406;&#x3002;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x63D2;&#x4EF6;&#x5728;<code>kube-system</code> &#x547D;&#x540D;&#x7A7A;&#x95F4;&#x5185;&#x521B;&#x5EFA;&#x3002;</p>
+<p>Kubernetes&#x9009;&#x5B9A;&#x7684;&#x63D2;&#x4EF6;&#x5982;&#x4E0B;&#xFF0C;&#x5176;&#x4ED6;&#x652F;&#x6301;&#x7684;&#x63D2;&#x4EF6;&#x53EF;&#x4EE5;&#x4ECE; <a href="https://kubernetes.io/docs/concepts/cluster-administration/addons/" target="_blank">&#x63D2;&#x4EF6;&#x5217;&#x8868;</a>.&#x83B7;&#x53D6;&#x3002;</p>
+<h3 id="dns">DNS</h3>
+<hr>
+<p>&#x867D;&#x7136;&#x5176;&#x4ED6;&#x63D2;&#x4EF6;&#x5E76;&#x975E;&#x4E00;&#x5B9A;&#x9700;&#x8981;&#xFF0C;&#x4F46;&#x6240;&#x6709;Kubernetes&#x96C6;&#x7FA4;&#x90FD;&#x5E94;&#x5177;&#x6709;&#x96C6;&#x7FA4;DNS&#xFF0C;&#x56E0;&#x4E3A;&#x8BB8;&#x591A;&#x793A;&#x4F8B;&#x90FD;&#x4F9D;&#x8D56;&#x4E8E;&#x5B83;&#x3002;&#x96C6;&#x7FA4;DNS&#x662F;&#x4E00;&#x4E2A;DNS&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x9664;&#x4E86;&#x4F60;&#x73AF;&#x5883;&#x4E2D;&#x7684;&#x5176;&#x4ED6;DNS&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4E3A;Kuberntes&#x4E2D;&#x7684;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x3002;Kubernetes&#x542F;&#x52A8;&#x7684;&#x5BB9;&#x5668;&#x5728;DNS&#x641C;&#x7D22;&#x5217;&#x8868;&#x4E2D;&#x81EA;&#x52A8;&#x5305;&#x542B;&#x8BE5;DNS&#x670D;&#x52A1;&#x5668;&#x3002;</p>
+<h3 id="web-ui-dashboard">Web UI (Dashboard)</h3>
+<hr>
+<p>&#x4EEA;&#x8868;&#x677F;&#x662F;Kubernetes&#x96C6;&#x7FA4;&#x7684;&#x57FA;&#x4E8E;Web&#x7684;&#x901A;&#x7528;UI&#x3002; &#x5B83;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x7BA1;&#x7406;&#x548C;&#x8C03;&#x8BD5;&#x7FA4;&#x96C6;&#x4E2D;&#x8FD0;&#x884C;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4EE5;&#x53CA;&#x7FA4;&#x96C6;&#x672C;&#x8EAB;&#x3002;</p>
+<h3 id="container-resource-monitoring">Container Resource Monitoring</h3>
+<hr>
+<p>&#x5BB9;&#x5668;&#x8D44;&#x6E90;&#x76D1;&#x63A7;&#x5C06;&#x5BB9;&#x5668;&#x7684;&#x901A;&#x7528;&#x65F6;&#x95F4;&#x5E8F;&#x5217;&#x6307;&#x6807;&#x5B58;&#x50A8;&#x5728;&#x4E00;&#x4E2A;&#x4E2D;&#x592E;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x7528;&#x4E8E;&#x6D4F;&#x89C8;&#x8BE5;&#x6570;&#x636E;&#x7684;UI&#x3002;</p>
+<h3 id="cluster-level-logging">Cluster-level Logging</h3>
+<hr>
+<p>&#x96C6;&#x7FA4;&#x7EA7;&#x522B;&#x7684;&#x65E5;&#x5FD7;&#x673A;&#x5236;&#x652F;&#x6301;&#x5C06;&#x6240;&#x6709;&#x7684;&#x5BB9;&#x5668;&#x65E5;&#x5FD7;&#x5B58;&#x50A8;&#x5230;&#x4E00;&#x4E2A;&#x4E2D;&#x5FC3;&#x65E5;&#x5FD7;&#x5B58;&#x50A8;&#x4E2D;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x641C;&#x7D22;&#x548C;&#x67E5;&#x8BE2;&#x63A5;&#x53E3;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="kubernetes.html" class="navigation navigation-prev " aria-label="Previous page: What is Kubernetes">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="api.html" class="navigation navigation-next " aria-label="Next page: The Kubernetes API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes Components","level":"1.2.1.2","depth":3,"next":{"title":"The Kubernetes API","level":"1.2.1.3","depth":3,"path":"Concepts/Overview/api.md","ref":"Concepts/Overview/api.md","articles":[]},"previous":{"title":"What is Kubernetes","level":"1.2.1.1","depth":3,"path":"Concepts/Overview/kubernetes.md","ref":"Concepts/Overview/kubernetes.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Concepts/Overview/components.md","mtime":"2019-03-13T16:39:13.595Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-14T11:39:08.635Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1063 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Managing Compute Resources for Containers · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="podAssign.html" />
+    
+    
+    <link rel="prev" href="configureBestPractices.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Concepts
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" >
+            
+                <span>
+            
+                    
+                    Overview
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../Overview/kubernetes.html">
+            
+                <a href="../Overview/kubernetes.html">
+            
+                    
+                    What is Kubernetes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.2" data-path="../Overview/components.html">
+            
+                <a href="../Overview/components.html">
+            
+                    
+                    Kubernetes Components
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.3" data-path="../Overview/api.html">
+            
+                <a href="../Overview/api.html">
+            
+                    
+                    The Kubernetes API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4" >
+            
+                <span>
+            
+                    
+                    Objects
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.4.1" data-path="../Overview/Objects/objs.html">
+            
+                <a href="../Overview/Objects/objs.html">
+            
+                    
+                    Understanding Kubernetes Objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.2" data-path="../Overview/Objects/names.html">
+            
+                <a href="../Overview/Objects/names.html">
+            
+                    
+                    Names
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.3" data-path="../Overview/Objects/namespaces.html">
+            
+                <a href="../Overview/Objects/namespaces.html">
+            
+                    
+                    Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.4" data-path="../Overview/Objects/labels.html">
+            
+                <a href="../Overview/Objects/labels.html">
+            
+                    
+                    Labels and Selectors
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.5" data-path="../Overview/Objects/annotations.html">
+            
+                <a href="../Overview/Objects/annotations.html">
+            
+                    
+                    Annotations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.6" data-path="../Overview/Objects/field.html">
+            
+                <a href="../Overview/Objects/field.html">
+            
+                    
+                    Field Selectors
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4.7" data-path="../Overview/Objects/recLabels.html">
+            
+                <a href="../Overview/Objects/recLabels.html">
+            
+                    
+                    Recommended Labels
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5" >
+            
+                <span>
+            
+                    
+                    manage
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.5.1" data-path="../Overview/manage/kom.html">
+            
+                <a href="../Overview/manage/kom.html">
+            
+                    
+                    Kubernetes Object Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.2" data-path="../Overview/manage/commans.html">
+            
+                <a href="../Overview/manage/commans.html">
+            
+                    
+                    Managing Kubernetes Objects Using Imperative Commands
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.3" data-path="../Overview/manage/configuration.html">
+            
+                <a href="../Overview/manage/configuration.html">
+            
+                    
+                    Imperative Management of Kubernetes Objects Using Configuration Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5.4" data-path="../Overview/manage/declarative.html">
+            
+                <a href="../Overview/manage/declarative.html">
+            
+                    
+                    Declarative Management of Kubernetes Objects Using Configuration Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" >
+            
+                <span>
+            
+                    
+                    Policies
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../Policies/resourceQuotas.html">
+            
+                <a href="../Policies/resourceQuotas.html">
+            
+                    
+                    Resource Quotas
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../Policies/podSecPolicy.html">
+            
+                <a href="../Policies/podSecPolicy.html">
+            
+                    
+                    Pod Security Policies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" >
+            
+                <span>
+            
+                    
+                    Configuration
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="configureBestPractices.html">
+            
+                <a href="configureBestPractices.html">
+            
+                    
+                    Configuration Best Practices
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3.2" data-path="containerResources.html">
+            
+                <a href="containerResources.html">
+            
+                    
+                    Managing Compute Resources for Containers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.3" data-path="podAssign.html">
+            
+                <a href="podAssign.html">
+            
+                    
+                    Assigning Pods to Nodes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.4" data-path="tt.html">
+            
+                <a href="tt.html">
+            
+                    
+                    Taints and Tolerations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.5" data-path="secrets.html">
+            
+                <a href="secrets.html">
+            
+                    
+                    Secrets
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.6" data-path="ocaukf.html">
+            
+                <a href="ocaukf.html">
+            
+                    
+                    Organizing Cluster Access Using kubeconfig Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.7" data-path="ppp.html">
+            
+                <a href="ppp.html">
+            
+                    
+                    Pod Priority and Preemption
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" >
+            
+                <span>
+            
+                    
+                    Containers
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../Containers/images.html">
+            
+                <a href="../Containers/images.html">
+            
+                    
+                    Images
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../Containers/envs.html">
+            
+                <a href="../Containers/envs.html">
+            
+                    
+                    Container Environment Variables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../Containers/runtime.html">
+            
+                <a href="../Containers/runtime.html">
+            
+                    
+                    Runtime Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../Containers/lifecycle.html">
+            
+                <a href="../Containers/lifecycle.html">
+            
+                    
+                    Container Lifecycle Hooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../related.html">
+            
+                <a href="../../related.html">
+            
+                    
+                    Related
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../Related/borg.html">
+            
+                <a href="../../Related/borg.html">
+            
+                    
+                    Borg
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Managing Compute Resources for Containers</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="&#x7BA1;&#x7406;&#x5BB9;&#x5668;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;">&#x7BA1;&#x7406;&#x5BB9;&#x5668;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;</h3>
+<p>&#x5F53;&#x4F60;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;pod&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x6307;&#x5B9A;&#x6BCF;&#x4E2A;&#x5BB9;&#x5668;&#x9700;&#x8981;&#x7684;CPU&#x548C;&#x5185;&#x5B58;&#xFF08;RAM&#xFF09;&#x3002;&#x5F53;&#x5BB9;&#x5668;&#x6307;&#x5B9A;&#x4E86;requests&#x8D44;&#x6E90;&#x65F6;&#xFF0C;&#x8C03;&#x5EA6;&#x5668;&#x53EF;&#x4EE5;&#x66F4;&#x597D;&#x7684;&#x51B3;&#x5B9A;&#x5C06;pod&#x90E8;&#x7F72;&#x5230;&#x54EA;&#x4E2A;&#x8282;&#x70B9;&#x4E0A;&#x3002;&#x5F53;&#x5BB9;&#x5668;&#x6307;&#x5B9A;&#x4E86;limits&#x8D44;&#x6E90;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x4EE5;&#x6307;&#x5B9A;&#x7684;&#x65B9;&#x5F0F;&#x5904;&#x7406;&#x8282;&#x70B9;&#x4E0A;&#x8D44;&#x6E90;&#x7684;&#x4E89;&#x7528;&#x3002;requests&#x548C;limits&#x4E4B;&#x95F4;&#x533A;&#x522B;&#x66F4;&#x8BE6;&#x7EC6;&#x7684;&#x4FE1;&#x606F;&#x53EF;&#x4EE5;&#x4ECE;<a href="https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md" target="_blank">Resource QoS</a>&#x83B7;&#x53D6;&#x3002;&#x672C;&#x6587;&#x5C06;&#x9488;&#x5BF9;&#x4EE5;&#x4E0B;&#x4E3B;&#x9898;&#x5206;&#x522B;&#x4ECB;&#x7ECD;&#xFF1A;</p>
+<ul>
+<li><p>&#x8D44;&#x6E90;&#x7C7B;&#x578B;</p>
+</li>
+<li><p>Pod&#x3001;&#x5BB9;&#x5668;&#x8D44;&#x6E90;request&#x548C;limit</p>
+</li>
+<li><p>CPU&#x7684;&#x610F;&#x4E49;</p>
+</li>
+<li><p>&#x5185;&#x5B58;&#x7684;&#x610F;&#x4E49;</p>
+</li>
+<li><p>&#x5982;&#x4F55;&#x8C03;&#x5EA6;Pod</p>
+</li>
+<li><p>&#x5982;&#x4F55;&#x8FD0;&#x884C;Pod</p>
+</li>
+<li><p>&#x76D1;&#x63A7;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x4F7F;&#x7528;</p>
+</li>
+<li><p>&#x6545;&#x969C;&#x6392;&#x9664;</p>
+</li>
+<li><p>&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;</p>
+</li>
+<li><p>&#x6269;&#x5C55;&#x8D44;&#x6E90;</p>
+</li>
+<li><p>&#x6539;&#x8FDB;&#x8BA1;&#x5212;</p>
+</li>
+</ul>
+<h3 id="&#x8D44;&#x6E90;&#x7C7B;&#x578B;">&#x8D44;&#x6E90;&#x7C7B;&#x578B;</h3>
+<p><em>CPU</em>&#x548C;<em>&#x5185;&#x5B58;</em>&#x90FD;&#x662F;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#xFF0C;&#x6BCF;&#x79CD;&#x8D44;&#x6E90;&#x90FD;&#x6709;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#xFF0C;CPU&#x7684;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#x662F;&#x6838;&#xFF0C;&#x5185;&#x5B58;&#x7684;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#x662F;&#x5B57;&#x8282;&#x3002;CPU&#x548C;&#x5185;&#x5B58;&#x7EDF;&#x79F0;&#x4E3A;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#xFF0C;&#x6216;&#x4EC5;&#x79F0;&#x8D44;&#x6E90;&#x3002;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x662F;&#x53EF;&#x4EE5;&#x8BF7;&#x6C42;&#xFF0C;&#x5206;&#x914D;&#x548C;&#x4F7F;&#x7528;&#x7684;&#x53EF;&#x6D4B;&#x91CF;&#x6570;&#x91CF;&#xFF0C;&#x4E0D;&#x540C;&#x4E0E;API &#x8D44;&#x6E90;&#x3002;API &#x8D44;&#x6E90;&#xFF08;Pods&#x548C;Services&#xFF09;&#x662F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Kubernetes API Server&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x548C;&#x4FEE;&#x6539;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+<h3 id="pod&#x3001;&#x5BB9;&#x5668;&#x8D44;&#x6E90;&#xFF1A;requests&#x548C;limits">Pod&#x3001;&#x5BB9;&#x5668;&#x8D44;&#x6E90;&#xFF1A;requests&#x548C;limits</h3>
+<p>Pod&#x7684;&#x6BCF;&#x4E2A;Container&#x90FD;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4EE5;&#x4E0B;&#x4E00;&#x9879;&#x6216;&#x591A;&#x9879;&#xFF1A;</p>
+<ul>
+<li><p><code>spec.containers[].resources.limits.cpu</code></p>
+</li>
+<li><p><code>spec.containers[].resources.limits.memory</code></p>
+</li>
+<li><p><code>spec.containers[].resources.requests.cpu</code></p>
+</li>
+<li><p><code>spec.containers[].resources.requests.memory</code></p>
+</li>
+</ul>
+<p>&#x5C3D;&#x7BA1;requests&#x548C;limits&#x53EA;&#x80FD;&#x5BF9;&#x5355;&#x4E2A;&#x5BB9;&#x5668;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x4F46;&#x662F;&#x8BA8;&#x8BBA;Pod&#x8D44;&#x6E90;&#x7684;requests&#x548C;limits&#x4E5F;&#x662F;&#x5341;&#x5206;&#x65B9;&#x4FBF;&#x7684;&#x3002;&#x4E00;&#x4E2A;Pod&#x5BF9;&#x67D0;&#x79CD;&#x7279;&#x5B9A;&#x8D44;&#x6E90;&#x7684;request/limit&#x662F;Pod&#x5185;&#x6240;&#x6709;&#x5BB9;&#x5668;request/limit&#x7684;&#x603B;&#x548C;&#x3002;</p>
+<h3 id="cpu&#x7684;&#x610F;&#x4E49;">CPU&#x7684;&#x610F;&#x4E49;</h3>
+<p>CPU&#x8D44;&#x6E90;&#x7684;Limits&#x548C;requests&#x7684;&#x503C;&#x90FD;&#x4EE5;<em>cpu</em>&#x5355;&#x5143;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#x3002;&#x5728;Kubernetes&#x4E2D;&#xFF0C;&#x4E00;cpu&#x548C;&#x4EE5;&#x4E0B;cpu&#x7684;&#x8868;&#x793A;&#x5BF9;&#x7B49;&#xFF1A;</p>
+<ul>
+<li>1 AWS vCPU</li>
+<li>1 GCP Core</li>
+<li>1 Azure vCore</li>
+<li>1 IBM vCPU</li>
+<li>&#x4E00;&#x4E2A;&#x8D85;&#x7EBF;&#x7A0B;&#xFF08;&#x5728;&#x5177;&#x6709;&#x8D85;&#x7EBF;&#x7A0B;&#x7684;&#x88F8;&#x673A;Intel&#x5904;&#x7406;&#x5668;&#x4E0A;&#xFF09;</li>
+</ul>
+<p>CPU&#x8D44;&#x6E90;&#x5141;&#x8BB8;&#x8BF7;&#x6C42;&#x5206;&#x6570;&#x4E2A;cpu&#x3002;&#x4E00;&#x4E2A;&#x62E5;&#x6709;<code>spec.containers[].resources.requests.cpu=0.5</code>&#x7684;&#x5BB9;&#x5668;&#x4FDD;&#x8BC1;&#x5BB9;&#x5668;&#x4E4B;&#x591A;&#x8BF7;&#x6C42;0.5&#x4E2A;CPU&#x3002;&#x4E00;&#x4E2A;CPU=1000m,&#x5BF9;&#x4E8E;CPU&#x8D44;&#x6E90;&#x7684;&#x7CBE;&#x5EA6;&#x4E3A;1m&#xFF0C;&#x7CBE;&#x5EA6;&#x8D85;&#x8FC7;1m&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x4E0D;&#x5141;&#x8BB8;&#x7684;&#x3002;CPU&#x8D44;&#x6E90;&#x90FD;&#x662F;&#x4EE5;&#x7EDD;&#x5BF9;&#x503C;&#x800C;&#x4E0D;&#x662F;&#x76F8;&#x5BF9;&#x503C;&#x7533;&#x8BF7;&#xFF0C;&#x5728;&#x4E00;&#x4E2A;&#x53EA;&#x6709;&#x4E00;&#x6838;&#xFF0C;&#x53CC;&#x6838;&#x6216;&#x8005;48&#x6838;&#x7684;&#x673A;&#x5668;&#x4E0A;&#xFF0C;0.1&#x7684;&#x542B;&#x4E49;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<h3 id="&#x5185;&#x5B58;&#x7684;&#x610F;&#x4E49;">&#x5185;&#x5B58;&#x7684;&#x610F;&#x4E49;</h3>
+<p>&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x7684;Limit&#x548C;request&#x503C;&#x90FD;&#x662F;&#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x666E;&#x901A;&#x6574;&#x6570;&#x6216;&#x5B9A;&#x70B9;&#x6574;&#x6570;&#x914D;&#x5408;&#x540E;&#x7F00; E, P, T, G, M, K&#x6765;&#x8868;&#x793A;&#x5185;&#x5B58;&#xFF0C;&#x5F53;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E24;&#x4E2A;&#x5B57;&#x6BCD;&#x7684;&#x540E;&#x7F00;Ei, Pi, Ti, Gi, Mi, Ki&#x3002;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x4EE5;&#x4E0B;&#x8868;&#x8FBE;&#x5F0F;&#x8BA1;&#x7B97;&#x7684;&#x5185;&#x5B58;&#x503C;&#x662F;&#x76F8;&#x7B49;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-shell">128974848, 129e6, 129M, 123Mi
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x6709;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x4E00;&#x4E2A;Pod&#x6709;&#x4E24;&#x4E2A;&#x5BB9;&#x5668;&#xFF0C;&#x6BCF;&#x4E2A;&#x5BB9;&#x5668;&#x9700;&#x8981;0.25CPU&#x548C;64MiB&#x5185;&#x5B58;&#xFF0C;&#x6BCF;&#x4E2A;&#x5BB9;&#x5668;&#x9650;&#x5236;&#x6700;&#x591A;&#x4F7F;&#x7528;0.5CPU&#x548C;128MiB&#x5185;&#x5B58;&#x3002;&#x53EF;&#x4EE5;&#x8BF4;&#x6574;&#x4E2A;Pod&#x9700;&#x8981;0.5CPU&#x548C;128MiB&#x5185;&#x5B58;&#xFF0C;&#x6700;&#x591A;&#x4F7F;&#x7528;1CPU&#x548C;256MiB&#x5185;&#x5B58;&#x3002;</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> v1
+<span class="hljs-attr">kind:</span> Pod
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> frontend
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  containers:</span>
+<span class="hljs-attr">  - name:</span> db
+<span class="hljs-attr">    image:</span> mysql
+<span class="hljs-attr">    env:</span>
+<span class="hljs-attr">    - name:</span> MYSQL_ROOT_PASSWORD
+<span class="hljs-attr">      value:</span> <span class="hljs-string">&quot;password&quot;</span>
+<span class="hljs-attr">    resources:</span>
+<span class="hljs-attr">      requests:</span>
+<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;64Mi&quot;</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;250m&quot;</span>
+<span class="hljs-attr">      limits:</span>
+<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;128Mi&quot;</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;500m&quot;</span>
+<span class="hljs-attr">  - name:</span> wp
+<span class="hljs-attr">    image:</span> wordpress
+<span class="hljs-attr">    resources:</span>
+<span class="hljs-attr">      requests:</span>
+<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;64Mi&quot;</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;250m&quot;</span>
+<span class="hljs-attr">      limits:</span>
+<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;128Mi&quot;</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;500m&quot;</span>
+</code></pre>
+<h3 id="&#x5982;&#x4F55;&#x8C03;&#x5EA6;&#x5BF9;&#x8D44;&#x6E90;&#x6709;&#x8981;&#x6C42;&#x7684;pod">&#x5982;&#x4F55;&#x8C03;&#x5EA6;&#x5BF9;&#x8D44;&#x6E90;&#x6709;&#x8981;&#x6C42;&#x7684;pod</h3>
+<hr>
+<p>&#x5F53;&#x4F60;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;pod&#x65F6;&#xFF0C;kubernete&#x7684;&#x8C03;&#x5EA6;&#x5668;&#x4F1A;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5141;&#x8BB8;pod&#x3002;&#x8282;&#x70B9;&#x4E0A;&#x6BCF;&#x79CD;&#x8D44;&#x6E90;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x6700;&#x5927;&#x5BB9;&#x91CF;&#xFF1A;&#x53EF;&#x4EE5;&#x4E3A;pod&#x63D0;&#x4F9B;&#x7684;CPU&#x548C;&#x5185;&#x5B58;&#x7684;&#x603B;&#x548C;&#x3002;&#x8C03;&#x5EA6;&#x5668;&#x4FDD;&#x8BC1;&#xFF0C;&#x5BF9;&#x4E8E;&#x6BCF;&#x79CD;&#x8D44;&#x6E90;&#xFF0C;&#x8C03;&#x5EA6;&#x5BB9;&#x5668;&#x9700;&#x8981;&#x7684;&#x603B;&#x548C;&#x4F4E;&#x4E8E;&#x8282;&#x70B9;&#x7684;&#x5BB9;&#x91CF;&#x3002;&#x6CE8;&#x610F;&#xFF0C;&#x5373;&#x4F7F;&#x8282;&#x70B9;cpu&#x548C;&#x5185;&#x5B58;&#x7684;&#x4F7F;&#x7528;&#x975E;&#x5E38;&#x4F4E;&#xFF0C;&#x5982;&#x679C;&#x5BB9;&#x91CF;&#x68C0;&#x67E5;&#x5931;&#x8D25;&#xFF0C;&#x8C03;&#x5EA6;&#x5668;&#x4F9D;&#x7136;&#x4F1A;&#x62D2;&#x7EDD;&#x8BB2;pod&#x8C03;&#x5EA6;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x3002;&#x5F53;&#x7A0D;&#x540E;&#x8D44;&#x6E90;&#x7684;&#x4F7F;&#x7528;&#x589E;&#x52A0;&#x65F6;&#xFF0C;&#x8FD9;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x7684;&#x963B;&#x6B62;&#x8282;&#x70B9;&#x4E0A;&#x8D44;&#x6E90;&#x7684;&#x77ED;&#x7F3A;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x4E00;&#x5929;&#x4E2D;&#x8BF7;&#x6C42;&#x6700;&#x9AD8;&#x7684;&#x65F6;&#x523B;&#x3002;</p>
+<h3 id="&#x5982;&#x4F55;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x8D44;&#x6E90;&#x6709;&#x9650;&#x5236;&#x7684;pod">&#x5982;&#x4F55;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x8D44;&#x6E90;&#x6709;&#x9650;&#x5236;&#x7684;pod</h3>
+<hr>
+<p>&#x5F53;kubelet&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;pod&#xFF0C;kubelet&#x628A;CPU&#x548C;&#x5185;&#x5B58;&#x7684;&#x9650;&#x5236;&#x4F20;&#x7ED9;&#x5BB9;&#x5668;&#x8FD0;&#x884C;&#x65F6;&#x3002;</p>
+<p>&#x5F53;&#x4F7F;&#x7528;Docker&#x65F6;:</p>
+<ul>
+<li><del>spec.containers[].resources.requests.cpu&#x7684;&#x503C;&#x4F1A;&#x8F6C;&#x6362;&#x4E3A;&#x6838;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x503C;&#x4E3A;&#x5206;&#x6570;&#x5219;&#x4E58;1024&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x503C;&#x4F5C;&#x4E3A;docker run --cpu-shares&#x7684;&#x503C;&#x3002;</del></li>
+<li><code>spec.containers[].resources.limits.cpu</code> &#x503C;&#x8F6C;&#x6362;&#x4E3A;&#x5FAE;&#x6838;&#x503C;&#x5E76;&#x4E58;100&#xFF0C;&#x8BE5;&#x503C;&#x4E3A;&#x5BB9;&#x5668;&#x6BCF;100ms&#x5185;&#x4F7F;&#x7528;&#x7684;&#x603B;&#x7684;cpu&#x4E8B;&#x4EF6;&#x3002;&#x5728;100ms&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x5185;&#x5BB9;&#x5668;&#x4E0D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;&#x5BB9;&#x5668;&#x5171;&#x4EAB;&#x7684;cpu&#x65F6;&#x95F4;&#x3002;</li>
+</ul>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;:</strong> &#x9ED8;&#x8BA4;&#x7684;&#x914D;&#x989D;&#x5468;&#x671F;&#x4E3A;100ms&#xFF0C;cpu&#x5206;&#x914D;&#x65F6;&#x95F4;&#x7684;&#x5468;&#x671F;&#x662F;1ms&#x3002;</p>
+</blockquote>
+<ul>
+<li><code>spec.containers[].resources.limits.memory</code> &#x503C;&#x8F6C;&#x6362;&#x4E3A;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#xFF0C;&#x5E76;&#x4F5C;&#x4E3A;<code>docker run --memory</code>&#x7684;&#x503C;&#x7528;&#x4E8E;&#x542F;&#x52A8;&#x5BB9;&#x5668;&#x3002;</li>
+</ul>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#x4F7F;&#x7528;&#x4E86;&#x8D85;&#x8FC7;&#x5185;&#x5B58;&#x9650;&#x5236;&#x7684;&#x5185;&#x5B58;&#xFF0C;&#x5BB9;&#x5668;&#x53EF;&#x80FD;&#x88AB;&#x505C;&#x6B62;&#x3002;&#x5982;&#x679C;&#x5BB9;&#x5668;&#x53EF;&#x4EE5;&#x91CD;&#x542F;&#xFF0C;kubelet&#x4F1A;&#x91CD;&#x542F;&#x5BB9;&#x5668;&#xFF0C;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x9519;&#x8BEF;&#x4E5F;&#x4E00;&#x6837;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#x8D85;&#x8FC7;&#x4E86;&#x5BF9;&#x5185;&#x5B58;&#x7684;&#x9700;&#x8981;&#x503C;&#xFF0C;&#x5F53;&#x8282;&#x70B9;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;pod&#x53EF;&#x80FD;&#x88AB;&#x9A71;&#x9010;&#x3002;&#x5BB9;&#x5668;&#x957F;&#x65F6;&#x95F4;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;cpu&#x9650;&#x5236;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x6740;&#x6B7B;&#x4E5F;&#x53EF;&#x80FD;&#x4E0D;&#x4F1A;&#x88AB;&#x6740;&#x6B7B;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5BB9;&#x5668;&#x4E0D;&#x4F1A;&#x56E0;&#x4E3A;cpu&#x4F7F;&#x7528;&#x7387;&#x9AD8;&#x800C;&#x88AB;&#x6740;&#x6B7B;&#x3002;</p>
+<h3 id="&#x76D1;&#x63A7;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x7684;&#x4F7F;&#x7528;">&#x76D1;&#x63A7;&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x7684;&#x4F7F;&#x7528;</h3>
+<hr>
+<p>&#x8D44;&#x6E90;&#x4F7F;&#x7528;&#x662F;pod&#x72B6;&#x6001;&#x62A5;&#x544A;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x3002;&#x5982;&#x679C;kubernetes&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#x4E86;&#x53EF;&#x9009;&#x7684;<a href="https://github.com/kubernetes/kubernetes/blob/master/cluster/addons/cluster-monitoring/README.md" target="_blank">&#x76D1;&#x63A7;</a>&#x63D2;&#x4EF6;&#xFF0C;pod&#x5BF9;&#x8D44;&#x6E90;&#x7684;&#x4F7F;&#x7528;&#x53EF;&#x4EE5;&#x4ECE;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x83B7;&#x53D6;&#x3002;</p>
+<h3 id="&#x6545;&#x969C;&#x6392;&#x9664;">&#x6545;&#x969C;&#x6392;&#x9664;</h3>
+<hr>
+<h4 id="pod&#x4E00;&#x76F4;&#x5904;&#x4E8E;pending&#x72B6;&#x6001;&#xFF0C;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x4E3A;&#x8C03;&#x5EA6;&#x5931;&#x8D25;">Pod&#x4E00;&#x76F4;&#x5904;&#x4E8E;pending&#x72B6;&#x6001;&#xFF0C;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x4E3A;&#x8C03;&#x5EA6;&#x5931;&#x8D25;</h4>
+<p>&#x5982;&#x679C;&#x8C03;&#x5EA6;&#x5668;&#x627E;&#x4E0D;&#x5230;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x5141;&#x8BB8;pod&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5728;&#x627E;&#x5230;&#x8FD9;&#x6837;&#x7684;&#x8282;&#x70B9;&#x4E4B;&#x524D;pod&#x4E00;&#x76F4;&#x5904;&#x4E8E;&#x672A;&#x8C03;&#x5EA6;&#x72B6;&#x6001;&#x3002;&#x6BCF;&#x6B21;&#x8C03;&#x5EA6;&#x5668;&#x67E5;&#x627E;&#x8282;&#x70B9;&#x5931;&#x8D25;&#x65F6;&#xFF0C;&#x4F1A;&#x4EA7;&#x751F;&#x5982;&#x4E0B;&#x7C7B;&#x4F3C;&#x7684;&#x4E00;&#x4E2A;&#x4E8B;&#x4EF6;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl describe pod frontend | grep -A 3 Events
+Events:
+  FirstSeen LastSeen   Count  From          Subobject   PathReason      Message
+  36s   5s     6      {scheduler }              FailedScheduling  Failed for reason PodExceedsFreeCPU and possibly others
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x540D;&#x53EB;&#x201C;frontend&#x201D;&#x7684;pod&#x56E0;&#x4E3A;&#x8282;&#x70B9;&#x7684;cpu&#x8D44;&#x6E90;&#x4E0D;&#x8DB3;&#x800C;&#x8C03;&#x5EA6;&#x5931;&#x8D25;&#xFF0C;&#x5F53;&#x8282;&#x70B9;&#x5185;&#x5B58;&#x4E0D;&#x8DB3;&#x65F6;&#x4F1A;&#x51FA;&#x73B0;&#x7C7B;&#x4F3C;&#x7684;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF08;PodExceedsFreeMemory&#xFF09;&#x3002;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C;&#x5982;&#x679C;pod&#x5904;&#x4E8E;pending&#x72B6;&#x6001;&#x5E76;&#x4E14;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x672A;cpu&#x8D44;&#x6E90;&#x4E0D;&#x8DB3;&#x6216;&#x5185;&#x5B58;&#x8D44;&#x6E90;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x89E3;&#x51B3;&#xFF1A;</p>
+<ul>
+<li>&#x5411;&#x96C6;&#x7FA4;&#x6DFB;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x8282;&#x70B9;&#x3002;</li>
+<li>&#x505C;&#x6B62;&#x4E0D;&#x9700;&#x8981;&#x7684;pod&#xFF0C;&#x5C06;&#x8D44;&#x6E90;&#x63D0;&#x4F9B;&#x7ED9;pending&#x72B6;&#x6001;&#x7684;pods&#x3002;</li>
+<li>&#x68C0;&#x67E5;pod&#x4E0D;&#x5927;&#x4E8E;&#x6240;&#x6709;&#x8282;&#x70B9;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x6240;&#x6709;&#x8282;&#x70B9;&#x7684;cpu&#x5BB9;&#x91CF;&#x4E3A;1&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x4E2A;pod&#x5BF9;cpu&#x7684;&#x9700;&#x6C42;&#x4E3A;1.1&#xFF0C;&#x5219;&#x8BE5;pod&#x6C38;&#x8FDC;&#x65E0;&#x6CD5;&#x88AB;&#x8C03;&#x5EA6;&#x3002;</li>
+</ul>
+<p>&#x4F7F;&#x7528; kubectl describe node &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x8282;&#x70B9;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x548C;&#x5DF2;&#x7ECF;&#x5206;&#x914D;&#x7684;&#x8D44;&#x6E90;&#x3002;</p>
+<pre><code class="lang-shell">kubectl describe nodes e2e-test-minion-group-4lw4
+Name:            e2e-test-minion-group-4lw4
+[ ... lines removed for clarity ...]
+Capacity:
+ cpu:                               2
+ memory:                            7679792Ki
+ pods:                              110
+Allocatable:
+ cpu:                               1800m
+ memory:                            7474992Ki
+ pods:                              110
+[ ... lines removed for clarity ...]
+Non-terminated Pods:        (5 in total)
+  Namespace    Name                                  CPU Requests  CPU Limits  Memory Requests  Memory Limits
+  ---------    ----                                  ------------  ----------  ---------------  -------------
+  kube-system  fluentd-gcp-v1.38-28bv1               100m (5%)     0 (0%)      200Mi (2%)       200Mi (2%)
+  kube-system  kube-dns-3297075139-61lj3             260m (13%)    0 (0%)      100Mi (1%)       170Mi (2%)
+  kube-system  kube-proxy-e2e-test-...               100m (5%)     0 (0%)      0 (0%)           0 (0%)
+  kube-system  monitoring-influxdb-grafana-v4-z1m12  200m (10%)    200m (10%)  600Mi (8%)       600Mi (8%)
+  kube-system  node-problem-detector-v0.1-fj7m3      20m (1%)      200m (10%)  20Mi (0%)        100Mi (1%)
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  CPU Requests    CPU Limits    Memory Requests    Memory Limits
+  ------------    ----------    ---------------    -------------
+  680m (34%)      400m (20%)    920Mi (12%)        1070Mi (14%)
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;pod&#x9700;&#x8981;&#x8D85;&#x8FC7;1120mCPU&#x548C;6.23Gi&#x7684;&#x5185;&#x5B58;&#xFF0C;pod&#x5C06;&#x4E0D;&#x4F1A;&#x8C03;&#x5EA6;&#x5230;&#x8BE5;&#x8282;&#x70B9;&#x3002;&#x4ECE;<code>Pods</code>&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x5176;&#x4ED6;pod&#x4F7F;&#x7528;&#x7684;&#x8D44;&#x6E90;&#x60C5;&#x51B5;&#x3002;&#x8282;&#x70B9;&#x53EF;&#x4EE5;&#x4E3A;pod&#x63D0;&#x4F9B;&#x7684;&#x8D44;&#x6E90;&#x603B;&#x548C;&#x4F4E;&#x4E8E;&#x8282;&#x70B9;&#x5BB9;&#x91CF;&#xFF0C;&#x56E0;&#x4E3A;&#x7CFB;&#x7EDF;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#x5360;&#x7528;&#x4E86;&#x90E8;&#x5206;&#x8D44;&#x6E90;&#x3002;<code>allocatable</code>&#x7ED9;&#x51FA;&#x4E86;&#x8282;&#x70B9;&#x53EF;&#x4EE5;&#x4E3A;pod&#x63D0;&#x4F9B;&#x7684;&#x53EF;&#x7528;&#x8D44;&#x6E90;&#x3002;&#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x8D44;&#x6E90;&#x914D;&#x989D;&#x4EE5;&#x9650;&#x5236;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x7684;&#x6D88;&#x8017;&#xFF0C;&#x7ED3;&#x548C;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x4E00;&#x4E2A;&#x56E2;&#x961F;&#x6D88;&#x8017;&#x8FC7;&#x591A;&#x7684;&#x8D44;&#x6E90;&#x3002;</p>
+<h4 id="&#x5BB9;&#x5668;&#x7EC8;&#x6B62;">&#x5BB9;&#x5668;&#x7EC8;&#x6B62;</h4>
+<p>&#x4F60;&#x7684;&#x5BB9;&#x5668;&#x53EF;&#x80FD;&#x56E0;&#x4E3A;&#x8D44;&#x6E90;&#x532E;&#x4E4F;&#x800C;&#x7EC8;&#x6B62;&#x3002;&#x4F7F;&#x7528;<code>kubectl describe pod</code>&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#x662F;&#x5426;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x8D85;&#x8FC7;&#x4E86;&#x9650;&#x5236;&#x7684;&#x8D44;&#x6E90;&#x800C;&#x88AB;&#x6740;&#x6B7B;&#xFF1A;</p>
+<pre><code class="lang-shell">kubectl describe pod simmemleak-hra99
+Name:                           simmemleak-hra99
+Namespace:                      default
+Image(s):                       saadali/simmemleak
+Node:                           kubernetes-node-tf0f/10.240.216.66
+Labels:                         name=simmemleak
+Status:                         Running
+Reason:
+Message:
+IP:                             10.244.2.75
+Replication Controllers:        simmemleak (1/1 replicas created)
+Containers:
+  simmemleak:
+    Image:  saadali/simmemleak
+    Limits:
+      cpu:                      100m
+      memory:                   50Mi
+    State:                      Running
+      Started:                  Tue, 07 Jul 2015 12:54:41 -0700
+    Last Termination State:     Terminated
+      Exit Code:                1
+      Started:                  Fri, 07 Jul 2015 12:54:30 -0700
+      Finished:                 Fri, 07 Jul 2015 12:54:33 -0700
+    Ready:                      False
+    Restart Count:              5
+Conditions:
+  Type      Status
+  Ready     False
+Events:
+  FirstSeen                         LastSeen                         Count  From                              SubobjectPath                       Reason      Message
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {scheduler }                                                          scheduled   Successfully assigned simmemleak-hra99 to kubernetes-node-tf0f
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   pulled      Pod container image &quot;k8s.gcr.io/pause:0.8.0&quot; already present on machine
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   created     Created with docker id 6a41280f516d
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    implicitly required container POD   started     Started with docker id 6a41280f516d
+  Tue, 07 Jul 2015 12:53:51 -0700   Tue, 07 Jul 2015 12:53:51 -0700  1      {kubelet kubernetes-node-tf0f}    spec.containers{simmemleak}         created     Created with docker id 87348f12526a
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x4F8B;&#x5B50;&#x4E2D;&#x7684; <code>Restart Count: 5</code> &#x8BF4;&#x660E; <code>simmemleak</code>&#x5BB9;&#x5668;&#x5DF2;&#x7ECF;&#x7EC8;&#x6B62;&#x5E76;&#x88AB;&#x91CD;&#x542F;5&#x6B21;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>kubectl get pod</code>&#x547D;&#x4EE4;&#x914D;&#x5408; <code>-o go-template=...</code>&#x53C2;&#x6570;&#x6765;&#x83B7;&#x53D6;&#x4E4B;&#x524D;&#x5904;&#x4E8E;&#x505C;&#x6B62;&#x72B6;&#x6001;&#x7684;&#x5BB9;&#x5668;&#x3002;</p>
+<pre><code class="lang-shell">kubectl get pod -o go-template=&apos;{{range.status.containerStatuses}}{{&quot;Container Name: &quot;}}{{.name}}{{&quot;\r\nLastState: &quot;}}{{.lastState}}{{end}}&apos;  simmemleak-hra99
+Container Name: simmemleak
+LastState: map[terminated:map[exitCode:137 reason:OOM Killed startedAt:2015-07-07T20:58:43Z finishedAt:2015-07-07T20:58:43Z containerID:docker://0e4095bba1feccdfe7ef9fb6ebffe972b4b14285d5acdec6f0d3ae8a22fad8b2]]
+</code></pre>
+<p>&#x5BB9;&#x5668;&#x7EC8;&#x6B62;&#x7684;&#x539F;&#x56E0;&#x662F; <code>reason:OOM Killed</code>,  <code>OOM</code> &#x662F;&#x6807;&#x51C6;&#x7684;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#x9519;&#x8BEF;&#xFF0C;&#x8BF4;&#x660E;&#x5BB9;&#x5668;&#x4F7F;&#x7528;&#x4E86;&#x8D85;&#x8FC7;&#x9650;&#x5236;&#x7684;&#x5185;&#x5B58;&#x3002;</p>
+<h3 id="&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;">&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;</h3>
+<p><strong>&#x7279;&#x6027;&#x72B6;&#x6001;:</strong> <code>Kubernetes v1.13</code> <a href="https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#" target="_blank">beta</a></p>
+<p>Kubernetes&#x5728;1.8&#x7248;&#x672C;&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x79CD;&#x65B0;&#x7684;&#x8D44;&#x6E90;&#xFF1A;<em>ephemeral-storage</em>&#x7528;&#x4E8E;&#x7BA1;&#x7406;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x3002;&#x5728;Kubernetes&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;kubelet&#x7684;&#x6839;&#x76EE;&#x5F55;&#xFF08;&#x9ED8;&#x8BA4;&#x8DEF;&#x5F84;&#x4E3A;/var/lib/kubelet&#xFF09;&#x548C;&#x65E5;&#x5FD7;&#x76EE;&#x5F55;&#xFF08;/var/log&#xFF09;&#x9ED8;&#x8BA4;&#x5B58;&#x50A8;&#x5728;&#x8282;&#x70B9;&#x7684;&#x6839;&#x5206;&#x533A;&#x4E4B;&#x4E0B;&#x3002;Pod&#x901A;&#x8FC7;emptyDis&#x5377;&#x3002;&#x5BB9;&#x5668;&#x65E5;&#x5FD7;&#xFF0C;&#x955C;&#x50CF;&#x5C42;&#x548C;&#x955C;&#x50CF;&#x53EF;&#x5199;&#x5C42;&#x5171;&#x4EAB;&#x548C;&#x6D88;&#x8017;&#x8282;&#x70B9;&#x66F4;&#x5206;&#x533A;&#x7A7A;&#x95F4;&#x3002;</p>
+<p>&#x8BE5;&#x5206;&#x533A;&#x662F;&#x201C;&#x77ED;&#x6682;&#x201D;&#x7684;&#xFF0C;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E0D;&#x80FD;&#x671F;&#x671B;&#x4ECE;&#x8BE5;&#x5206;&#x533A;&#x5F97;&#x5230;&#x4EFB;&#x4F55;&#x6027;&#x80FD;SLAs&#xFF0C;&#x6BD4;&#x5982;&#x78C1;&#x76D8;IOPS&#x3002;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x7BA1;&#x7406;&#x4EC5;&#x4EC5;&#x9002;&#x7528;&#x4E8E;&#x6839;&#x5206;&#x533A;&#xFF0C;&#x955C;&#x50CF;&#x5C42;&#x548C;&#x53EF;&#x5199;&#x5C42;&#x7684;&#x53EF;&#x9009;&#x5206;&#x533A;&#x4E0D;&#x662F;&#x7BA1;&#x7406;&#x8303;&#x56F4;&#x5185;&#x3002;</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86;&#x53EF;&#x9009;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x5206;&#x533A;&#xFF0C;&#x6839;&#x5206;&#x533A;&#x5C06;&#x4E0D;&#x4F1A;&#x4FDD;&#x5B58;&#x4EFB;&#x4F55;&#x955C;&#x50CF;&#x5C42;&#x548C;&#x955C;&#x50CF;&#x53EF;&#x5199;&#x5C42;&#x3002;</p>
+</blockquote>
+<h4 id="&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;request&#x548C;limits&#x7684;&#x8BBE;&#x7F6E;">&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;request&#x548C;limits&#x7684;&#x8BBE;&#x7F6E;</h4>
+<p>Pod&#x4E2D;&#x7684;&#x5BB9;&#x5668;&#x652F;&#x6301;&#x4EE5;&#x4E0B;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x914D;&#x7F6E;&#xFF1A;</p>
+<ul>
+<li><code>spec.containers[].resources.limits.ephemeral-storage</code></li>
+<li><p><code>spec.containers[].resources.requests.ephemeral-storage</code></p>
+<p><code>ephemeral-storage</code> &#x7684;&#x5355;&#x4F4D;&#x4E3A;&#x5B57;&#x8282;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x666E;&#x901A;&#x6574;&#x6570;&#x548C;&#x79D1;&#x5B66;&#x8BB0;&#x6570;&#x6CD5;&#x914D;&#x5408;&#x540E;&#x7F00; E, P, T, G, M, K&#x6216; Ei, Pi, Ti, Gi, Mi, Ki&#x6765;&#x8868;&#x793A;limits&#x548C;requests&#x3002;&#x4EE5;&#x4E0B;&#x591A;&#x79CD;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x7ED9;&#x51FA;&#x7684;&#x503C;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF1A;</p>
+</li>
+</ul>
+<pre><code class="lang-shell">128974848, 129e6, 129M, 123Mi
+</code></pre>
+<p>&#x4F8B;&#x5982;&#xFF0C;&#x4E0B;&#x9762;&#x7684;pod&#x6709;&#x4E24;&#x4E2A;&#x5BB9;&#x5668;&#xFF0C;&#x6BCF;&#x4E2A;&#x5BB9;&#x5668;&#x9700;&#x8981;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x7684;&#x5927;&#x5C0F;&#x4E3A;2GiB&#xFF0C;&#x6BCF;&#x4E2A;&#x5BB9;&#x5668;&#x9650;&#x5236;&#x4F7F;&#x7528;&#x7684;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x7684;&#x5927;&#x5C0F;&#x4E3A;4GiB&#x3002;&#x5BF9;&#x4E8E;Pod&#x6765;&#x8BF4;&#xFF0C;Pod&#x9700;&#x8981;&#x6700;&#x5C11;4GiB&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#xFF0C;&#x6700;&#x591A;8GiB&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x3002;</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> v1
+<span class="hljs-attr">kind:</span> Pod
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> frontend
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  containers:</span>
+<span class="hljs-attr">  - name:</span> db
+<span class="hljs-attr">    image:</span> mysql
+<span class="hljs-attr">    env:</span>
+<span class="hljs-attr">    - name:</span> MYSQL_ROOT_PASSWORD
+<span class="hljs-attr">      value:</span> <span class="hljs-string">&quot;password&quot;</span>
+<span class="hljs-attr">    resources:</span>
+<span class="hljs-attr">      requests:</span>
+<span class="hljs-attr">        ephemeral-storage:</span> <span class="hljs-string">&quot;2Gi&quot;</span>
+<span class="hljs-attr">      limits:</span>
+<span class="hljs-attr">        ephemeral-storage:</span> <span class="hljs-string">&quot;4Gi&quot;</span>
+<span class="hljs-attr">  - name:</span> wp
+<span class="hljs-attr">    image:</span> wordpress
+<span class="hljs-attr">    resources:</span>
+<span class="hljs-attr">      requests:</span>
+<span class="hljs-attr">        ephemeral-storage:</span> <span class="hljs-string">&quot;2Gi&quot;</span>
+<span class="hljs-attr">      limits:</span>
+<span class="hljs-attr">        ephemeral-storage:</span> <span class="hljs-string">&quot;4Gi&quot;</span>
+</code></pre>
+<h4 id="&#x5982;&#x679C;&#x8C03;&#x5EA6;&#x5BF9;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x6709;&#x8981;&#x6C42;&#x7684;pod">&#x5982;&#x679C;&#x8C03;&#x5EA6;&#x5BF9;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x6709;&#x8981;&#x6C42;&#x7684;Pod</h4>
+<p>&#x5F53;&#x4F60;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;pod&#x65F6;&#xFF0C;kubernete&#x7684;&#x8C03;&#x5EA6;&#x5668;&#x4F1A;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x8FD0;&#x884C;pod&#x3002;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x90FD;&#x6709;&#x53EF;&#x4F9B;Pod&#x4F7F;&#x7528;&#x7684;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x7684;&#x603B;&#x91CF;&#x3002;&#x8C03;&#x5EA6;&#x5668;&#x4FDD;&#x8BC1;&#x5F85;&#x8C03;&#x5EA6;&#x7684;&#x5BB9;&#x5668;&#x5BF9;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x7684;&#x9700;&#x6C42;&#x7684;&#x603B;&#x548C;&#x4E0D;&#x4F1A;&#x8D85;&#x8FC7;&#x8282;&#x70B9;&#x7684;&#x5BB9;&#x91CF;&#x3002;</p>
+<h4 id="&#x5982;&#x4F55;&#x5141;&#x8BB8;&#x5BF9;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x6709;&#x9650;&#x5236;&#x7684;pod">&#x5982;&#x4F55;&#x5141;&#x8BB8;&#x5BF9;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x6709;&#x9650;&#x5236;&#x7684;Pod</h4>
+<p>&#x5BF9;&#x4E8E;&#x5BB9;&#x5668;&#x7EA7;&#x522B;&#x7684;&#x9694;&#x79BB;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#x53EF;&#x5199;&#x5C42;&#x548C;&#x65E5;&#x5FD7;&#x4F7F;&#x7528;&#x4E86;&#x8D85;&#x8FC7;&#x9650;&#x5236;&#x7684;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#xFF0C;Pod&#x5C06;&#x4F1A;&#x88AB;&#x4ECE;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x9A71;&#x9010;&#x3002;&#x5BF9;&#x4E8E;Pod&#x7EA7;&#x522B;&#x7684;&#x9694;&#x79BB;&#xFF0C;&#x5982;&#x679C;&#x6240;&#x6709;&#x5BB9;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x672C;&#x5730;&#x77ED;&#x6682;&#x5B58;&#x50A8;&#x603B;&#x548C;&#x4EE5;&#x53CA;Pod&#x7684;emptyDis&#x5377;&#x8D85;&#x8FC7;&#x9650;&#x5236;&#xFF0C;Pod&#x5C06;&#x4F1A;&#x88AB;&#x9A71;&#x9010;&#x3002;</p>
+<h3 id="&#x6269;&#x5C55;&#x8D44;&#x6E90;">&#x6269;&#x5C55;&#x8D44;&#x6E90;</h3>
+<p>&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x662F;kubernetes.io&#x57DF;&#x4E4B;&#x5916;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x7684;&#x5B8C;&#x5168;&#x9650;&#x5B9A;&#x540D;&#x3002;&#x5B83;&#x4EEC;&#x5141;&#x8BB8;&#x96C6;&#x7FA4;&#x8FD0;&#x8425;&#x5546;&#x8FDB;&#x884C;&#x589E;&#x5F3A;&#xFF0C;&#x5E76;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x975E;Kubernetes&#x5185;&#x7F6E;&#x8D44;&#x6E90;&#x3002;&#x4F7F;&#x7528;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;1&#x3001;&#x96C6;&#x7FA4;&#x8FD0;&#x8425;&#x5546;&#x63D0;&#x4F9B;&#x4E00;&#x79CD;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#xFF1B;2&#x3001;&#x7528;&#x6237;&#x5728;Pod&#x5185;&#x8BF7;&#x6C42;&#x4F7F;&#x7528;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x3002;</p>
+<h4 id="&#x7BA1;&#x7406;&#x6269;&#x5C55;&#x8D44;&#x6E90;">&#x7BA1;&#x7406;&#x6269;&#x5C55;&#x8D44;&#x6E90;</h4>
+<h5 id="&#x8282;&#x70B9;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;">&#x8282;&#x70B9;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;</h5>
+<p>&#x8282;&#x70B9;&#x7EA7;&#x522B;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x4E0E;&#x8282;&#x70B9;&#x76F8;&#x5173;&#x8054;&#x3002;</p>
+<h5 id="&#x8BBE;&#x5907;&#x63D2;&#x4EF6;&#x7BA1;&#x7406;&#x8D44;&#x6E90;">&#x8BBE;&#x5907;&#x63D2;&#x4EF6;&#x7BA1;&#x7406;&#x8D44;&#x6E90;</h5>
+<p>&#x53C2;&#x8003;<a href="https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/" target="_blank">Device Plugin</a> </p>
+<h5 id="&#x5176;&#x4ED6;&#x8D44;&#x6E90;">&#x5176;&#x4ED6;&#x8D44;&#x6E90;</h5>
+<p>&#x8981;&#x589E;&#x51CF;&#x65B0;&#x7684;&#x8282;&#x70B9;&#x7EA7;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#xFF0C;&#x7FA4;&#x96C6;&#x64CD;&#x4F5C;&#x5458;&#x53EF;&#x4EE5;&#x5411;API&#x670D;&#x52A1;&#x5668;&#x63D0;&#x4EA4;<code>PATCH</code> HTTP&#x8BF7;&#x6C42;&#xFF0C;&#x4EE5;&#x6307;&#x5B9A;&#x7FA4;&#x96C6;&#x4E2D;&#x8282;&#x70B9;&#x7684;<code>status.capacity</code>&#x4E2D;&#x7684;&#x53EF;&#x7528;&#x6570;&#x91CF;&#x3002; &#x6267;&#x884C;&#x6B64;&#x64CD;&#x4F5C;&#x540E;&#xFF0C;&#x8282;&#x70B9;&#x7684;<code>status.capacity</code>&#x5C06;&#x5305;&#x542B;&#x65B0;&#x8D44;&#x6E90;&#x3002; kubelet&#x5C06;&#x5F02;&#x6B65;&#x5730;&#x4F7F;&#x7528;&#x65B0;&#x8D44;&#x6E90;&#x81EA;&#x52A8;&#x66F4;&#x65B0;<code>status.allocatable</code>&#x5B57;&#x6BB5;&#x3002; &#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x7531;&#x4E8E;&#x8C03;&#x5EA6;&#x7A0B;&#x5E8F;&#x5728;&#x8BC4;&#x4F30;Pod&#x9002;&#x5E94;&#x6027;&#x65F6;&#x4F7F;&#x7528;&#x8282;&#x70B9;status.allocatable&#x503C;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x4F7F;&#x7528;&#x65B0;&#x8D44;&#x6E90;&#x4FEE;&#x8865;&#x8282;&#x70B9;&#x5BB9;&#x91CF;&#x4E0E;&#x8BF7;&#x6C42;&#x5728;&#x8BE5;&#x8282;&#x70B9;&#x4E0A;&#x8C03;&#x5EA6;&#x8D44;&#x6E90;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;Pod&#x4E4B;&#x95F4;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x77ED;&#x6682;&#x7684;&#x5EF6;&#x8FDF;&#x3002;</p>
+<p><strong>&#x6837;&#x4F8B;:</strong></p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;curl&#x5411;&#x96C6;&#x7FA4;<code>k8s-master</code>&#x4E2D;&#x7684; <code>k8s-node-1</code> &#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x521D;&#x59CB;&#x5BB9;&#x91CF;&#x4E3A;5&#x7684;&#x540D;&#x4E3A;&#x201C;example.com/foo&#x201D;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x3002;</p>
+<pre><code class="lang-shell">curl --header &quot;Content-Type: application/json-patch+json&quot; \
+--request PATCH \
+--data &apos;[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/status/capacity/example.com~1foo&quot;, &quot;value&quot;: &quot;5&quot;}]&apos; \
+http://k8s-master:8080/api/v1/nodes/k8s-node-1/status
+</code></pre>
+<h4 id="&#x96C6;&#x7FA4;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;">&#x96C6;&#x7FA4;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;</h4>
+<p>&#x96C6;&#x7FA4;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x4E0D;&#x4E0E;&#x8282;&#x70B9;&#x5173;&#x8054;&#xFF0C;&#x901A;&#x5E38;&#x7531;&#x8C03;&#x5EA6;&#x5668;&#x7684;&#x6269;&#x5C55;&#x7A0B;&#x5E8F;&#x8D1F;&#x8D23;&#x7BA1;&#x7406;&#xFF0C;&#x8C03;&#x5EA6;&#x5668;&#x6269;&#x5C55;&#x7A0B;&#x5E8F;&#x540C;&#x65F6;&#x8D1F;&#x8D23;&#x8D44;&#x6E90;&#x6D88;&#x8017;&#x548C;&#x8D44;&#x6E90;&#x914D;&#x989D;&#x3002;</p>
+<p>&#x4F7F;&#x7528; <a href="https://github.com/kubernetes/kubernetes/blob/release-1.10/pkg/scheduler/api/v1/types.go#L31" target="_blank">scheduler policy configuration</a> &#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x9700;&#x8981;&#x88AB;&#x8C03;&#x5EA6;&#x5668;&#x6269;&#x5C55;&#x7A0B;&#x5E8F;&#x7BA1;&#x7406;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x3002;</p>
+<p><strong>&#x6837;&#x4F8B;:</strong></p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x8C03;&#x5EA6;&#x5668;&#x7B56;&#x7565;&#x914D;&#x7F6E;&#x8868;&#x660E;&#x96C6;&#x7FA4;&#x7EA7;&#x522B;&#x7684;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x201C;example.com/foo&#x201D;&#x5C06;&#x6709;&#x8C03;&#x5EA6;&#x5668;&#x6269;&#x5C55;&#x7A0B;&#x5E8F;&#x8D1F;&#x8D23;&#x7BA1;&#x7406;&#x3002;</p>
+<ul>
+<li>&#x5F53;&#x4E00;&#x4E2A;pod&#x8BF7;&#x6C42; &#x201C;example.com/foo&#x201D;&#x65F6;&#x624D;&#x4F1A;&#x4F7F;&#x7528;&#x8C03;&#x5EA6;&#x5668;&#x6269;&#x5C55;&#x7A0B;&#x5E8F;&#x8C03;&#x5EA6;&#x3002;</li>
+<li><code>ignoredByScheduler</code> &#x5B57;&#x6BB5;&#x6307;&#x660E;&#x8C03;&#x5EA6;&#x5668;&#x5728;  <code>PodFitsResources</code> &#x5224;&#x65AD;&#x65F6;&#x5FFD;&#x7565;&#x201C;example.com/foo&#x201D; &#x8D44;&#x6E90;&#x68C0;&#x67E5;&#x3002;</li>
+</ul>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;kind&quot;</span>: <span class="hljs-string">&quot;Policy&quot;</span>,
+  <span class="hljs-string">&quot;apiVersion&quot;</span>: <span class="hljs-string">&quot;v1&quot;</span>,
+  <span class="hljs-string">&quot;extenders&quot;</span>: [
+    {
+      <span class="hljs-string">&quot;urlPrefix&quot;</span>:<span class="hljs-string">&quot;&lt;extender-endpoint&gt;&quot;</span>,
+      <span class="hljs-string">&quot;bindVerb&quot;</span>: <span class="hljs-string">&quot;bind&quot;</span>,
+      <span class="hljs-string">&quot;managedResources&quot;</span>: [
+        {
+          <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;example.com/foo&quot;</span>,
+          <span class="hljs-string">&quot;ignoredByScheduler&quot;</span>: <span class="hljs-literal">true</span>
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h4 id="&#x6D88;&#x8017;&#x6269;&#x5C55;&#x8D44;&#x6E90;">&#x6D88;&#x8017;&#x6269;&#x5C55;&#x8D44;&#x6E90;</h4>
+<p>&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x50CF;CPU&#x548C;&#x5185;&#x5B58;&#x4E00;&#x6837;&#x5728;Pod&#x4E2D;&#x6D88;&#x8017;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x3002;&#x8C03;&#x5EA6;&#x5668;&#x8D1F;&#x8D23;&#x5BF9;&#x8D44;&#x6E90;&#x8FDB;&#x884C;&#x7EDF;&#x8BA1;&#xFF0C;&#x4EE5;&#x907F;&#x514D;&#x5C06;&#x53EF;&#x7528;&#x7684;&#x8D44;&#x6E90;&#x540C;&#x65F6;&#x5206;&#x914D;&#x7ED9;&#x591A;&#x4E2A;Pod&#x3002;</p>
+<p>API&#x670D;&#x52A1;&#x5668;&#x5C06;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x7684;&#x6570;&#x91CF;&#x9650;&#x5236;&#x4E3A;&#x6574;&#x6570;&#xFF0C;<code>3</code>&#xFF0C;<code>3000m</code>&#x548C;<code>3Ki</code>&#x90FD;&#x662F;&#x5408;&#x6CD5;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;<code>0.5</code>&#x548C;<code>1500</code>&#x662F;&#x4E0D;&#x5408;&#x6CD5;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;</strong> &#x6269;&#x5C55;&#x8D44;&#x6E90;&#x53D6;&#x4EE3;&#x4E86;Opaque Integer Resources&#x3002; &#x7528;&#x6237;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4FDD;&#x7559;&#x7684;kubernetes.io&#x4EE5;&#x5916;&#x7684;&#x4EFB;&#x4F55;&#x57DF;&#x540D;&#x524D;&#x7F00;&#x3002;</p>
+</blockquote>
+<p>&#x5728;Pod&#x5185;&#x6D88;&#x8017;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5C06;&#x8D44;&#x6E90;&#x540D;&#x4F5C;&#x4E3A;<code>spec.containers[].resources.limits</code>&#x7684;&#x952E;&#xFF0C;</p>
+<blockquote>
+<p><strong>&#x6CE8;&#x610F;:</strong> &#x6269;&#x5C55;&#x8D44;&#x6E90;&#x4E0D;&#x80FD;&#x8FC7;&#x91CF;&#x4F7F;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x5BB9;&#x5668;&#x4E2D;&#x914D;&#x7F6E;request&#x548C;limit&#xFF0C;&#x5219;&#x4E24;&#x8005;&#x7684;&#x503C;&#x5FC5;&#x987B;&#x76F8;&#x7B49;&#x3002;</p>
+</blockquote>
+<p>&#x4E00;&#x4E2A;Pod&#x53EA;&#x6709;&#x5F53;&#x5305;&#x62EC;CPU&#xFF0C;&#x5185;&#x5B58;&#x548C;&#x4EFB;&#x4F55;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x90FD;&#x6EE1;&#x8DB3;&#x7684;&#x6761;&#x4EF6;&#x4E0B;&#x624D;&#x80FD;&#x88AB;&#x8C03;&#x5EA6;&#x3002;&#x5982;&#x679C;Pod&#x8981;&#x6C42;&#x7684;&#x8D44;&#x6E90;&#x5F97;&#x4E0D;&#x5230;&#x8981;&#x6C42;&#xFF0C;&#x5219;Pod&#x7684;&#x72B6;&#x6001;&#x5C06;&#x4E00;&#x76F4;&#x4FDD;&#x6301;&#x5728;<code>PENDING</code>&#x3002;</p>
+<p><strong>&#x6837;&#x4F8B;:</strong></p>
+<p>&#x4E0B;&#x9762;&#x7684;Pod&#x8981;&#x6C42;2CPU&#x8BA1;&#x7B97;&#x8D44;&#x6E90;&#x548C;1 &#x201C;example.com/foo&#x201C;&#x6269;&#x5C55;&#x8D44;&#x6E90;&#x3002;</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> v1
+<span class="hljs-attr">kind:</span> Pod
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> my-pod
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  containers:</span>
+<span class="hljs-attr">  - name:</span> my-container
+<span class="hljs-attr">    image:</span> myimage
+<span class="hljs-attr">    resources:</span>
+<span class="hljs-attr">      requests:</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-number">2</span>
+        example.com/foo: <span class="hljs-number">1</span>
+<span class="hljs-attr">      limits:</span>
+        example.com/foo: <span class="hljs-number">1</span>
+</code></pre>
+<h3 id="&#x6539;&#x8FDB;&#x8BA1;&#x5212;">&#x6539;&#x8FDB;&#x8BA1;&#x5212;</h3>
+<hr>
+<p>Kubernetes 1.5&#x7248;&#x672C;&#x4EC5;&#x5141;&#x8BB8;&#x5728;&#x5BB9;&#x5668;&#x4E0A;&#x6307;&#x5B9A;&#x8D44;&#x6E90;&#x6570;&#x91CF;&#x3002;&#x8BA1;&#x5212;&#x6539;&#x8FDB;&#x5BF9;Pod&#x4E2D;&#x6240;&#x6709;&#x5BB9;&#x5668;&#x5171;&#x4EAB;&#x7684;&#x8D44;&#x6E90;&#x7684;&#x201C;&#x8BA1;&#x8D39;&#x201D;&#xFF0C;&#x4F8B;&#x5982;emptyDir&#x5377;&#x3002;</p>
+<p>Kubernetes 1.5&#x7248;&#x672C;&#x4EC5;&#x4EC5;&#x652F;&#x6301;&#x5BB9;&#x5668;&#x5BF9;CPU&#x548C;&#x5185;&#x5B58;&#x7684;request&#x548C;limit&#xFF0C;&#x8BA1;&#x5212;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x8D44;&#x6E90;&#x7C7B;&#x578B;&#xFF0C;&#x5305;&#x62EC;&#x78C1;&#x76D8;&#x7A7A;&#x95F4;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x652F;&#x6301;&#x7528;&#x6237;&#x81EA;&#x5B9A;&#x4E49;&#x8D44;&#x6E90;&#x7684;&#x6846;&#x67B6;&#x3002;</p>
+<p>Kubernetes&#x901A;&#x8FC7;&#x652F;&#x6301;&#x591A;&#x4E2A;&#x7EA7;&#x522B;&#x7684;&#x670D;&#x52A1;&#x8D28;&#x91CF;&#x6765;&#x652F;&#x6301;&#x8D44;&#x6E90;&#x7684;&#x8FC7;&#x5EA6;&#x4F7F;&#x7528;&#x3002;</p>
+<p>Kubernetes 1.5&#x7248;&#x672C;&#x4E2D;&#x4E00;&#x5355;&#x4F4D;CPU&#x5728;&#x4E0D;&#x540C;&#x7684;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x548C;&#x540C;&#x4E00;&#x4E91;&#x4F9B;&#x5E94;&#x5546;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x673A;&#x5668;&#x4E0A;&#x7684;&#x542B;&#x4E49;&#x4E0D;&#x76F8;&#x540C;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728;AWS&#x4E0A;&#xFF0C;&#x8282;&#x70B9;&#x7684;&#x5BB9;&#x91CF;&#x4EE5;ECUs&#x8868;&#x793A;&#xFF0C;&#x5728;GCE&#x4E0A;&#x4EE5;&#x903B;&#x8F91;&#x6838;&#x8868;&#x793A;&#x3002;&#x6211;&#x4EEC;&#x8BA1;&#x5212;&#x4FEE;&#x6539;cpu&#x8D44;&#x6E90;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x4EE5;&#x4FBF;&#x5728;&#x4F9B;&#x5E94;&#x5546;&#x548C;&#x5E73;&#x53F0;&#x4E4B;&#x95F4;&#x5B9E;&#x73B0;&#x66F4;&#x9AD8;&#x7684;&#x4E00;&#x81F4;&#x6027;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="configureBestPractices.html" class="navigation navigation-prev " aria-label="Previous page: Configuration Best Practices">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="podAssign.html" class="navigation navigation-next " aria-label="Next page: Assigning Pods to Nodes">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Managing Compute Resources for Containers","level":"1.2.3.2","depth":3,"next":{"title":"Assigning Pods to Nodes","level":"1.2.3.3","depth":3,"path":"Concepts/Configuration/podAssign.md","ref":"Concepts/Configuration/podAssign.md","articles":[]},"previous":{"title":"Configuration Best Practices","level":"1.2.3.1","depth":3,"path":"Concepts/Configuration/configureBestPractices.md","ref":"Concepts/Configuration/configureBestPractices.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Concepts/Configuration/containerResources.md","mtime":"2019-03-10T06:39:43.553Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-14T11:39:08.635Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
