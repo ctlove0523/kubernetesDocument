@@ -60,12 +60,14 @@ about 60% of the total CPU usage; they are allocated about 55% of the total memo
 
 ### 2.2 集群 和 cells
 
-The machines in a cell belong to a single cluster, defined by the high-performance datacenter-scale network fabric that connects them. A cluster lives inside a single datacenter building, and a collection of buildings makes up a site.1 A cluster usually hosts one large cell and may have a few smaller-scale test or special-purpose cells. We assiduously avoid any single point of failure.
+The machines in a cell belong to a single cluster, defined by the high-performance datacenter-scale network fabric that connects them. A cluster lives inside a single datacenter building, and a collection of buildings makes up a site. A cluster usually hosts one large cell and may have a few smaller-scale test or special-purpose cells. We assiduously avoid any single point of failure.
 
-
+cell中的机器属于单个集群，由连接机器的高性能数据中心规模的网络结构定义。一个集群只存在于单个数据中心中，多个数据中心构成一个站点。一个集群通常承载一个大型cell，并且可能具有一些较小规模的测试或特殊用途的cell。Borg努力的避免任何单点故障。
 
 Our median cell size is about 10 k machines after excluding test cells; some are much larger. The machines in a cell are heterogeneous in many dimensions: sizes (CPU, RAM,disk, network), processor type, performance, and capabilities such as an external IP address or flash storage. Borg isolates
 users from most of these differences by determining where in a cell to run tasks, allocating their resources, installing their programs and other dependencies, monitoring their health, and restarting them if they fail.
+
+Borg中型的cell一般包括10,000台左右的机器（排除测试cell），有些cell的规模更大。cell中的机器从多个维度来看都是异构的：大小（CPU，内存，磁盘，网络），处理器类型，性能和能力，比如是否有EIP，是否有闪存。Borg通过确定cell中运行任务的位置，分配资源，安装程序和其他依赖项，监视其运行状况以及在失败时重新启动来将用户与大多数差异隔离开来。
 
 ### 2.3 Jobs and tasks
 
