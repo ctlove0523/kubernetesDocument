@@ -1,6 +1,4 @@
-# Labels and Selectors
-
-标签和选择器
+# 标签和选择器
 
 标签是附加到对象（比如 pod）之上的键值对。标签旨在用于指定对用户有意义并且和用户相关对象的标示属性，但是不直接影响核心系统的语义。标签可用于组织和选择对象的子集。标签可以在创建对象的时候附加到对象，并且可以在之后的任何时间添加或修改标签。每个对象都可以定义一组键/值标签，对于给定的一个对象标签的键必须唯一。
 
@@ -13,9 +11,7 @@
 
 标签支持高效的查询和监控，非常适合在UI和CLI中使用。 非标示信息应使用注释记录。
 
-
-
-动机
+## 动机
 
 标签使用户能够以松散耦合的方式将用户的组织结构映射到系统对象，而无需客户端存储这些映射关系。
 
@@ -33,7 +29,7 @@
 
 
 
-语法和字符集
+## 语法和字符集
 
 Labels are key/value pairs. Valid label keys have two segments: an optional prefix and name, separated by a slash (/). The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between. The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), not longer than 253 characters in total, followed by a slash (/).
 
@@ -45,7 +41,7 @@ Valid label values must be 63 characters or less and must be empty or begin and 
 
 
 
-标签选择器
+## 标签选择器
 
 Unlike names and UIDs, labels do not provide uniqueness. In general, we expect many objects to carry the same label(s).
 
@@ -95,7 +91,7 @@ The first example selects all resources with key equal to environment and valu
 
 Set-based requirements can be mixed with equality-based requirements. For example: partition in (customerA, customerB),environment!=qa.
 
-API
+## API
 
 LIST and WATCH filtering
 
