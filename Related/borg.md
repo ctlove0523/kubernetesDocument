@@ -72,11 +72,11 @@ Borg中型的cell一般包括10,000台左右的机器（排除测试cell），�
 ### 2.3 Jobs and tasks
 
 A Borg job’s properties include its name, owner, and the number of tasks it has. Jobs can have constraints to force its tasks to run on machines with particular attributes such as processor architecture, OS version, or an external IP address. Constraints can be hard or soft; the latter act like preferences rather than requirements. The start of a job can be deferred until a prior one finishes. A job runs in just one cell.
-
+Borg的一个job属性包括名字，所有者和task的数量，Job可以通过约束强制它的task运行在具有特殊属性的机器上，比如特殊的处理器架构，操作系统版本或EIP地址。约束可以是硬约束也可以是软约束。软约束更像是偏好而不是要求。job的开始可以推迟到前一个job结束。一个job只能运行在一个cell中。
 
 
 Each task maps to a set of Linux processes running in a container on a machine [62]. The vast majority of the Borg workload does not run inside virtual machines (VMs),because we don’t want to pay the cost of virtualization. Also, the system was designed at a time when we had a considerable investment in processors with no virtualization support in hardware.
-
+每个task映射为运行在容器内的一组Linux进程，绝大多数Borg的工作负载不在虚拟机上运行，因为我们不想支持虚拟化的成本。此外，该系统是在我们对处理器进行大量投资而硬件上没有虚拟化支持的时候设计的。
 
 
 A task has properties too, such as its resource requirements and the task’s index within the job. Most task properties are the same across all tasks in a job, but can be overridden – e.g., to provide task-specific command-line flags. Each resource dimension (CPU cores, RAM, disk space,disk access rate, TCP ports,2
