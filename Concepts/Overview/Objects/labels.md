@@ -31,21 +31,15 @@
 
 ## 语法和字符集
 
-Labels are key/value pairs. Valid label keys have two segments: an optional prefix and name, separated by a slash (/). The name segment is required and must be 63 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between. The prefix is optional. If specified, the prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), not longer than 253 characters in total, followed by a slash (/).
-
-If the prefix is omitted, the label Key is presumed to be private to the user. Automated system components (e.g. kube-scheduler, kube-controller-manager, kube-apiserver, kubectl, or other third-party automation) which add labels to end-user objects must specify a prefix.
-
-The kubernetes.io/ and k8s.io/ prefixes are reserved for Kubernetes core components.
-
-Valid label values must be 63 characters or less and must be empty or begin and end with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between
+标签是键值对，合法的键包括两个部分：可选的前缀和名字，前缀和名字使用`/` 分割。名字部分的长度不能超过63个字符，字母,数字（ `a-z0-9A-Z`），`-`，`_`，`.`都是合法字符 。kubernetes.io/ and k8s.io/前缀是留给Kubernetes核心组件使用。
 
 
 
 ## 标签选择器
 
-Unlike names and UIDs, labels do not provide uniqueness. In general, we expect many objects to carry the same label(s).
+Unlike names不像名字和UID，标签不提供唯一性。一般来说，我们期望多个对象拥有相同的标签。
 
-Via a label selector, the client/user can identify a set of objects. The label selector is the core grouping primitive in Kubernetes.
+通过标签选择器，客户端和用户可以识别出一组对象。标签选择器是Kubernetes中的核心分组原语。
 
 The API currently supports two types of selectors: equality-based and set-based. A label selector can be made of multiple requirements which are comma-separated. In the case of multiple requirements, all must be satisfied so the comma separator acts as a logical AND (&&) operator.
 
