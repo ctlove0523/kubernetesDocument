@@ -48,5 +48,57 @@ A Pod can specify a set of shared storage *volumes*. All containers in the Pod c
 
 一个Pod可以指定一组共享卷。Pod内的所有容器都可以访问共享卷，从允许容器间共享数据。如果Pod中的一个容器需要重启，共享卷还支持Pod内持久数据的存储。
 
+## 使用 Pods
 
 在Kubernetes中你很少会创建独立的Pod，即便是单个Pod。这是因为Pod被设计为一种相对短暂的实体。当Pod被创建时（用户直接创建或控制器间接创建），Pod会被调度到集群中的一个节点上。Pod将一直在该节点上直到进程终止、pod对象被删除、由于缺乏资源pod被驱逐，或者节点失败。
+
+> 注意：重启Pod中的容器不要和重启Pod混淆。Pod本身不会运行，但是容器运行的环境会持续存在，直到删除为止。
+>
+> Pod自身不能自我修复。如果Pod被调度到失败节点，或者调度操作本身失败，Pod将会被删除。同样，由于缺乏资源或节点在维护，Pod将无法在驱逐中存活。Kubernetes使用称为控制器的更高级别的抽象，管理相对可处理的Pod实例。因此，尽管在Kubernetes中直接使用Pod是可以的，但是通过控制器管理Pod是更加通用的方式。
+>
+> 
+
+### Pods and Controllers
+
+控制器可以创建、管理多个Pod，处理复制，在集群范围内提供回滚和自愈能力。例如，如果一个节点失败，控制器可能会在不同的节点上调度一个相同的Pod来替代。
+
+包含一个或多个Pod的控制器实例如下：
+
+- [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+- [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
+
+通常，控制器使用你提供的Pod模板来创建它负责的Pod。.
+
+## Pod 模板
+
+Pod模板是包含在其他对象中的Pod规范，包括Replication Controller、Jobs和DaemonSets。控制器使用Pod模板来创建真实的Pod。下面是一个简单的Pod模板：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+```
+
+Pod模板不会指定所有副本的当前状态，pod模板更像cookie模具。一旦cookie被切开，cookie就和模具再无关系。在这里没有量子纠缠。对模板的后续更改甚至切换到新模板对已创建的pod没有直接影响。类似地，随后可以直接更新由复制控制器创建的pod。这与pod有意对比，pod确实指定了属于pod的所有容器的当前所需状态。 这种方法从根本上简化了系统语义并增加了原语的灵活性。
+
+
+
+
+
+
+
+
+
+
+
+
+
