@@ -47,3 +47,6 @@ Each Pod is assigned a unique IP address. Every container in a Pod shares the ne
 A Pod can specify a set of shared storage *volumes*. All containers in the Pod can access the shared volumes, allowing those containers to share data. Volumes also allow persistent data in a Pod to survive in case one of the containers within needs to be restarted. See [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/) for more information on how Kubernetes implements shared storage in a Pod
 
 一个Pod可以指定一组共享卷。Pod内的所有容器都可以访问共享卷，从允许容器间共享数据。如果Pod中的一个容器需要重启，共享卷还支持Pod内持久数据的存储。
+
+
+在Kubernetes中你很少会创建独立的Pod，即便是单个Pod。这是因为Pod被设计为一种相对短暂的实体。当Pod被创建时（用户直接创建或控制器间接创建），Pod会被调度到集群中的一个节点上。Pod将一直在该节点上直到进程终止、pod对象被删除、由于缺乏资源pod被驱逐，或者节点失败。
