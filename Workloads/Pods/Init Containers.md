@@ -14,3 +14,9 @@
 如果Pod的一个初始化容器失败，Kubernetes会一直重启Pod，直到初始化容器成功。但是，如果Pod的重启策略为从不`restartPolicy` ：never` 时kubernetes不会重启Pod。
 
 给PodSec增加`initContainers` ` 字段可以将容器指定为初始化容器，初始化容器的状态在字段`.`status.initContainerStatuses` 中展示。
+
+### 和普通容器的区别
+
+初始化容器支持普通容器支持的所有字段和功能，包括资源限制、卷和安全设置。但是，对于初始化容器的资源request和limits的处理略有不同。初始化容器不支持readiness探针，因为初始化容器必须在Pod ready之前允许结束。
+
+如果一个Pod有多个初始化容器，这些初始化容器将按顺序一个一个的执行。每个初始化容器必须在下一个启动之前执行成功。当所有初始化容器执行完成后，kubernetes初始化Pod并以普通容器运行应用容器。
