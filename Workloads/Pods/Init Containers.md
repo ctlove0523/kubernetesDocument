@@ -1,2 +1,16 @@
-## Understanding Init Containers
-## What can Init Containers be used for?
+# 初始化容器
+
+本章将概述初始化容器，一种在应用容器之前运行的特殊容器，可以包含一些应用容器中不存在的工具或配置脚本。
+
+## 理解初始化容器
+
+一个Pod可以有多个容器在其中运行应用，但是pod通常有一个或多个初始化容器，初始化容器在应用容器之前启动。
+
+除了以下几点初始化容器和普通容器类似：
+
+- 初始化容器总是可以运行完成。.
+- 每个初始化容器必须在下一个初始化容器启动前完成。
+
+如果Pod的一个初始化容器失败，Kubernetes会一直重启Pod，直到初始化容器成功。但是，如果Pod的重启策略为从不`restartPolicy` ：never` 时kubernetes不会重启Pod。
+
+给PodSec增加`initContainers` ` 字段可以将容器指定为初始化容器，初始化容器的状态在字段`.`status.initContainerStatuses` 中展示。
