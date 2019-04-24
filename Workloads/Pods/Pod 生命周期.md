@@ -61,24 +61,36 @@ A Pod has a PodStatus, which has an array of [PodConditions](https://kubernetes.
 
 A [Probe](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#probe-v1-core) is a diagnostic performed periodically by the [kubelet](https://kubernetes.io/docs/admin/kubelet/) on a Container. To perform a diagnostic, the kubelet calls a [Handler](https://godoc.org/k8s.io/kubernetes/pkg/api/v1#Handler)implemented by the Container. There are three types of handlers:
 
-- [ExecAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#execaction-v1-core): Executes a specified command inside the Container. The diagnostic is considered successful if the command exits with a status code of 0.
-- [TCPSocketAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#tcpsocketaction-v1-core): Performs a TCP check against the Container’s IP address on a specified port. The diagnostic is considered successful if the port is open.
-- [HTTPGetAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#httpgetaction-v1-core): Performs an HTTP Get request against the Container’s IP address on a specified port and path. The diagnostic is considered successful if the response has a status code greater than or equal to 200 and less than 400.
+探针是kubelet周期性对容器进行的诊断。为了对容器容器进行诊断，kubelet会调用容器实现的一个处理器。有三种类型的处理器：
 
-Each probe has one of three results:
+- [ExecAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#execaction-v1-core): Executes a specified command inside the Container. The diagnostic is considered successful if the command exits with a status code of 0.
+- ExecAction：执行容器内部一个特定的命令。如果命令以信号0退出则表明检查成功。
+- [TCPSocketAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#tcpsocketaction-v1-core): Performs a TCP check against the Container’s IP address on a specified port. The diagnostic is considered successful if the port is open.
+- TCPSocketAction：对容器IP地址的特定端口执行一个TCP连接检查，如果port打开则检查通过。
+- [HTTPGetAction](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#httpgetaction-v1-core): Performs an HTTP Get request against the Container’s IP address on a specified port and path. The diagnostic is considered successful if the response has a status code greater than or equal to 200 and less than 400.
+- HTTPGetAction: 对容器，端口和特定的URL执行HTTP GET请求，如果请求的HTTP状态码大于等于200小于400则认为检查成功。
+
+每一个探针检查有以下三种结果之一:
 
 - Success: The Container passed the diagnostic.
+- 成功：容器通过检查。
 - Failure: The Container failed the diagnostic.
+- 失败：容器未通过检查。
 - Unknown: The diagnostic failed, so no action should be taken.
+- 未知：检查失败，因此不应该采取任何措施。
 
-The kubelet can optionally perform and react to two kinds of probes on running Containers:
+kubelet可以选择在运行容器上执行和响应两种探针:
 
 - `livenessProbe`: Indicates whether the Container is running. If the liveness probe fails, the kubelet kills the Container, and the Container is subjected to its [restart policy](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy). If a Container does not provide a liveness probe, the default state is `Success`.
+- 存活探针：识别容器是否在运行。如果存活探针检查失败，kubelet将会杀死容器，容器将会按照重启策略执行动作。如果容器未提供存活探针检查，则默认状态未成功。
 - `readinessProbe`: Indicates whether the Container is ready to service requests. If the readiness probe fails, the endpoints controller removes the Pod’s IP address from the endpoints of all Services that match the Pod. The default state of readiness before the initial delay is `Failure`. If a Container does not provide a readiness probe, the default state is `Success`.
+- 可用性探针：识别容器是否可以处理请求。如果可用性检查失败，端点控制器会移除容器的IP。可用性探针检查的结果在延迟之前默认为失败。如果，容器未提供可用性探针，则状态默认为成功。
 
-### When should you use liveness or readiness probes?
+### 什么时候应该使用存活和可用性探针?
 
 If the process in your Container is able to crash on its own whenever it encounters an issue or becomes unhealthy, you do not necessarily need a liveness probe; the kubelet will automatically perform the correct action in accordance with the Pod’s `restartPolicy`.
+
+如果你容器中的进程在遇到问题或变得不健康时能够自行崩溃，你不一定需要存活探针。
 
 If you’d like your Container to be killed and restarted if a probe fails, then specify a liveness probe, and specify a `restartPolicy`of Always or OnFailure.
 
