@@ -22,16 +22,16 @@ Kubernetes提供了一个准入控制器（`PodPreset`），启用该控制器�
 
 每个Pod可以匹配0个或多个Pod Preset，每个`PodPreset` 可以用于0个或多个pod。当一个`PodPreset` 应用于一个或多个Pod时，Kubernetes修改Pod Spec。为了修改`Env`, `EnvFrom`, 和 `VolumeMounts` kubernetes需要修改Pod内所有容器的spec；为了修改 `Volume`,kubernetes修改Pod的Spec。
 
-> **Note:** A Pod Preset is capable of modifying the `.spec.containers` field in a Pod spec when appropriate. *No* resource definition from the Pod Preset will be applied to the `initContainers` field.
+> 注意：Pod Preset能够在适当的时候修改Pod spec中的`.spec.containers`  字段。Pod Preset中的资源定义不会应用于`initContainers` 字段。
 
-### Disable Pod Preset for a Specific Pod
+### 禁用特定Pod的Pod Preset
 
-There may be instances where you wish for a Pod to not be altered by any Pod Preset mutations. In these cases, you can add an annotation in the Pod Spec of the form: `podpreset.admission.kubernetes.io/exclude: "true"`.
+在某些情况下，你希望Pod不会被任何Pod Preset改变。在这些场景，你可以在Pod Spec中添加如下格式的注释：`podpreset.admission.kubernetes.io/exclude: "true"`。
 
 ## 启用 Pod Preset
 
-In order to use Pod Presets in your cluster you must ensure the following:
+要在群集中使用Pod Presets，您必须确保以下内容：
 
-1. You have enabled the API type `settings.k8s.io/v1alpha1/podpreset`. For example, this can be done by including `settings.k8s.io/v1alpha1=true` in the `--runtime-config` option for the API server. In minikube add this flag `--extra-config=apiserver.runtime-config=settings.k8s.io/v1alpha1=true` while starting the cluster.
-2. You have enabled the admission controller `PodPreset`. One way to doing this is to include `PodPreset` in the `--enable-admission-plugins` option value specified for the API server. In minikube add this flag `--extra-config=apiserver.enable-admission-plugins=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,PodPreset`while starting the cluster.
-3. You have defined your Pod Presets by creating `PodPreset` objects in the namespace you will use.
+1. 已经启用 `settings.k8s.io/v1alpha1/podpreset` 类型API。
+2. 已启用准入控制器`PodPreset` 。
+3. 已经在使用的命名空间内创建`PodPreset` 对象来定义Presets。
