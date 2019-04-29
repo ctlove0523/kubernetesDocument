@@ -15,25 +15,21 @@ Pod不会消失，除非有人（人或控制器）摧毁他们，或者发生�
 - 由于集群网络分区导致节点从集群消失。
 - 由于节点资源不足而导致pod被驱逐。
 
-Except for the out-of-resources condition, all these conditions should be familiar to most users; they are not specific to Kubernetes.
+除资源不足外，大多数用户都应熟悉所有这些条件; 它们不是Kubernetes特有的。我们把其他场景称为*自愿中断* 。自愿中断包括应用程序所有者启动的操作和集群管理员启动的操作。应用所有者典型的操作包括：
 
-We call other cases *voluntary disruptions*. These include both actions initiated by the application owner and those initiated by a Cluster Administrator. Typical application owner actions include:
+- 删除deployment或其他管理pod的控制器。
+- 更新pod的deployment导致重启。
+- 直接删除pod。
 
-- deleting the deployment or other controller that manages the pod
-- updating a deployment’s pod template causing a restart
-- directly deleting a pod (e.g. by accident)
+集群管理员的操作包括：
 
-Cluster Administrator actions include:
+- 排空节点进行修复或升级。
+- 从集群中排除节点来对集群缩容。
+- 从节点移除Pod来保证其他Pod可以部署在该节点。
 
-- [Draining a node](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/) for repair or upgrade.
-- Draining a node from a cluster to scale the cluster down (learn about [Cluster Autoscaling](https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#cluster-autoscaler) ).
-- Removing a pod from a node to permit something else to fit on that node.
+这些动作可能是集群管理员直接操作，也可能是由管理员允许的自动化执行，或者集群的托管供应商执行。咨询您的集群管理员或咨询您的云提供商或分发文档，以确定是否为您的集群启用了任何自愿中断源。如果没有启用任何自愿中断，你可以跳过Pod中断的预算。
 
-These actions might be taken directly by the cluster administrator, or by automation run by the cluster administrator, or by your cluster hosting provider.
-
-Ask your cluster administrator or consult your cloud provider or distribution documentation to determine if any sources of voluntary disruptions are enabled for your cluster. If none are enabled, you can skip creating Pod Disruption Budgets.
-
-> **Caution:** Not all voluntary disruptions are constrained by Pod Disruption Budgets. For example, deleting deployments or pods bypasses Pod Disruption Budgets.
+> **警告**：不是所有的自愿中断都受 Pod Disruption Budgets约束。例如，删除deployment或pod会绕过Pod Disruption Budgets。
 
 ## Dealing with Disruptions
 
