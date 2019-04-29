@@ -41,25 +41,27 @@ Pod不会消失，除非有人（人或控制器）摧毁他们，或者发生�
 
 自愿中断的频率各不相同。在基本的Kubernetes集群上，根本不存在自愿中断。但是，集群管理员和集群托管商可能运行额外的服务而导致自愿中断。例如：节点软件滚动升级可能导致自愿中断。此外，集群自动扩容的实现可能导致自愿中断。 您的集群管理员或托管服务提供商应记录预期的自愿中断级别（如果有的话）。Kubernetes提供的功能可以帮助您在频繁的自愿中断的同时运行高可用性应用程序。 我们将这组功能称为*中断预算*。
 
-## How Disruption Budgets Work
+## PDB如何工作
 
-An Application Owner can create a `PodDisruptionBudget` object (PDB) for each application. A PDB limits the number of pods of a replicated application that are down simultaneously from voluntary disruptions. For example, a quorum-based application would like to ensure that the number of replicas running is never brought below the number needed for a quorum. A web front end might want to ensure that the number of replicas serving load never falls below a certain percentage of the total.
+------
 
-Cluster managers and hosting providers should use tools which respect Pod Disruption Budgets by calling the [Eviction API](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/#the-eviction-api)instead of directly deleting pods or deployments. Examples are the `kubectl drain` command and the Kubernetes-on-GCE cluster upgrade script (`cluster/gce/upgrade.sh`).
+应用程序所有者可以为每个应用程序创建一个`PodDisruptionBudget`对象（PDB）。PDB限制由于自愿中断导致的应用程序同时下线的Pod数量。例如，基于仲裁的应用程序希望确保运行的副本数量永远不会低于仲裁所需的数量。Web前端可能希望确保服务负载的副本数量永远不会低于总数的某个百分比。
 
-When a cluster administrator wants to drain a node they use the `kubectl drain` command. That tool tries to evict all the pods on the machine. The eviction request may be temporarily rejected, and the tool periodically retries all failed requests until all pods are terminated, or until a configurable timeout is reached.
+集群管理器和集群供应商应该使用遵守Pod Disruption Budget的工具，工具通过调用`Eviction API`  而不是直接删除pod或deployment。例如，使用 `kubectl drain` 命令行工具，在 Kubernetes-on-GCE 集群上可以使用升级脚本`(cluster/gce/upgrade.sh)`
 
-A PDB specifies the number of replicas that an application can tolerate having, relative to how many it is intended to have. For example, a Deployment which has a `.spec.replicas: 5` is supposed to have 5 pods at any given time. If its PDB allows for there to be 4 at a time, then the Eviction API will allow voluntary disruption of one, but not two pods, at a time.
+当集群管理员想排除一个节点时，管理员应该使用`kubectl drain` 命令，工具会尝试驱逐机器上的所有pod。Pod驱逐请求可能被暂时拒绝，工具会周期性的尝试失败的请求直到所有的pod被停止或达到配置的超时间。
 
-The group of pods that comprise the application is specified using a label selector, the same as the one used by the application’s controller (deployment, stateful-set, etc).
+PDB指定的是应用程序可以容忍的副本数量，相对于预期的副本数量。例如，deployment中的 `.spec.replicas: 5` 字段希望在任何时刻都有5个Pod，如果它的PDB允许在某个时刻有4个Pod，那么Eviction API在某一时刻允许一个pod自愿中断，但是不允许两个pod自愿中断。
 
-The “intended” number of pods is computed from the `.spec.replicas` of the pods controller. The controller is discovered from the pods using the `.metadata.ownerReferences` of the object.
+构成应用的一组pod由标签选择器选择，这和应用的控制器（deployment、stateful-set等）选择pod是一样的。
 
-PDBs cannot prevent [involuntary disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#voluntary-and-involuntary-disruptions) from occurring, but they do count against the budget.
+期望pod的数量是由pod控制器的 `.spec.replicas`  字段计算。Pod使用对象的`.metadata.ownerReferences` 发现控制器。
 
-Pods which are deleted or unavailable due to a rolling upgrade to an application do count against the disruption budget, but controllers (like deployment and stateful-set) are not limited by PDBs when doing rolling upgrades – the handling of failures during application updates is configured in the controller spec. (Learn about [updating a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment).)
+PDB不能防止非自愿中断发生，但它们确实违背了预算。
 
-When a pod is evicted using the eviction API, it is gracefully terminated (see `terminationGracePeriodSeconds` in [PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/#podspec-v1-core).)
+由于应用程序滚动升级导致pod被删除或不可用，确实会被记录到中断预算中，但是在滚动升级时控制器不受PDB的限制，在滚动升级过程中错误的处理是在控制器的spec中定义。
+
+当使用驱逐API来驱逐一个pod时，pod可以被优雅的停止。
 
 ## PDB Example
 
