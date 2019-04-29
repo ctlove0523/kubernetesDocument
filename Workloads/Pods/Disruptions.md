@@ -31,17 +31,15 @@ Pod不会消失，除非有人（人或控制器）摧毁他们，或者发生�
 
 > **警告**：不是所有的自愿中断都受 Pod Disruption Budgets约束。例如，删除deployment或pod会绕过Pod Disruption Budgets。
 
-## Dealing with Disruptions
+## 处理中断
 
-Here are some ways to mitigate involuntary disruptions:
+以下是一些缓解非自愿中断的方法：
 
-- Ensure your pod [requests the resources](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-ram-container) it needs.
-- Replicate your application if you need higher availability. (Learn about running replicated [stateless](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/) and [stateful](https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/) applications.)
-- For even higher availability when running replicated applications, spread applications across racks (using [anti-affinity](https://kubernetes.io/docs/user-guide/node-selection/#inter-pod-affinity-and-anti-affinity-beta-feature)) or across zones (if using a [multi-zone cluster](https://kubernetes.io/docs/setup/multiple-zones).)
+- 确保Pod需要的资源。
+- 如果你需要更高的可靠性，对应用进行备份。
+- 为了在运行复制的应用程序时获得更高的可用性，应用程序可以跨机架（使用亲和反亲和性）或跨区（跨区集群）部署。
 
-The frequency of voluntary disruptions varies. On a basic Kubernetes cluster, there are no voluntary disruptions at all. However, your cluster administrator or hosting provider may run some additional services which cause voluntary disruptions. For example, rolling out node software updates can cause voluntary disruptions. Also, some implementations of cluster (node) autoscaling may cause voluntary disruptions to defragment and compact nodes. Your cluster administrator or hosting provider should have documented what level of voluntary disruptions, if any, to expect.
-
-Kubernetes offers features to help run highly available applications at the same time as frequent voluntary disruptions. We call this set of features *Disruption Budgets*.
+自愿中断的频率各不相同。在基本的Kubernetes集群上，根本不存在自愿中断。但是，集群管理员和集群托管商可能运行额外的服务而导致自愿中断。例如：节点软件滚动升级可能导致自愿中断。此外，集群自动扩容的实现可能导致自愿中断。 您的集群管理员或托管服务提供商应记录预期的自愿中断级别（如果有的话）。Kubernetes提供的功能可以帮助您在频繁的自愿中断的同时运行高可用性应用程序。 我们将这组功能称为*中断预算*。
 
 ## How Disruption Budgets Work
 
