@@ -63,97 +63,88 @@ PDB不能防止非自愿中断发生，但它们确实违背了预算。
 
 当使用驱逐API来驱逐一个pod时，pod可以被优雅的停止。
 
-## PDB Example
+## PDB 样例
 
-Consider a cluster with 3 nodes, `node-1` through `node-3`. The cluster is running several applications. One of them has 3 replicas initially called `pod-a`, `pod-b`, and `pod-c`. Another, unrelated pod without a PDB, called `pod-x`, is also shown. Initially, the pods are laid out as follows:
+考虑一个由三个节点`node-1`、`node-2`和`node-3`组成的集群，有多个应用运行在集群中。其中一个应用有三个副本`pod-a`、`pod-b`和`pod-c`。还有一个不涉及PDB的pod称为`pod-x` ，初始，pod的部署如下表所示：
 
 | node-1            | node-2            | node-3            |
-| ----------------- | ----------------- | ----------------- |
+| :---------------- | :---------------- | :---------------- |
 | pod-a *available* | pod-b *available* | pod-c *available* |
 | pod-x *available* |                   |                   |
 
-All 3 pods are part of a deployment, and they collectively have a PDB which requires there be at least 2 of the 3 pods to be available at all times.
+`pod-a`、`pod-b`和`pod-c`这三个pod是deployment的一部分，而且deployment有一个PDB要求在任何时刻三个pod中至少有两个pod可用。
 
-For example, assume the cluster administrator wants to reboot into a new kernel version to fix a bug in the kernel. The cluster administrator first tries to drain `node-1` using the `kubectl drain` command. That tool tries to evict `pod-a` and `pod-x`. This succeeds immediately. Both pods go into the `terminating` state at the same time. This puts the cluster in this state:
+举个例子，集群管理员想重置内核到新的版本以修复内核错误。集群管理员首先尝试使用`kbuectl drain` 命令排除`node-1` 。`kubectl` 工具尝试驱逐`pod-a`和`pod-x` ，这个操作将会立即成功。pod-a和pod-x会同时进入terminating状态，集群的状态如下：
 
 | node-1 *draining*   | node-2            | node-3            |
-| ------------------- | ----------------- | ----------------- |
+| :------------------ | :---------------- | :---------------- |
 | pod-a *terminating* | pod-b *available* | pod-c *available* |
 | pod-x *terminating* |                   |                   |
 
-The deployment notices that one of the pods is terminating, so it creates a replacement called `pod-d`. Since `node-1` is cordoned, it lands on another node. Something has also created `pod-y` as a replacement for `pod-x`.
+deployment会注意到有一个pod正在停止，因此deployment会创建`pod-d`来代替`pod-a`。由于`node-1`已经被封锁，因此deployment将`pod-d`部署在另外的节点上。同样的，`pod-y`会被创建来取代`pod-x`。
 
-(Note: for a StatefulSet, `pod-a`, which would be called something like `pod-1`, would need to terminate completely before its replacement, which is also called `pod-1` but has a different UID, could be created. Otherwise, the example applies to a StatefulSet as well.)
+(注意：对于`StatefulSet`来说，`pod-a`可能被叫做`pod-1`，`StatefulSet`要保证所有pod按顺序编号，只有在完全停止时才能被新的pod代替，而且新的pod也叫`pod-1`，但是UID会编号，其他方面都是一致的)
 
-Now the cluster is in this state:
+现在集群的状态如下:
 
 | node-1 *draining*   | node-2            | node-3            |
-| ------------------- | ----------------- | ----------------- |
+| :------------------ | :---------------- | :---------------- |
 | pod-a *terminating* | pod-b *available* | pod-c *available* |
 | pod-x *terminating* | pod-d *starting*  | pod-y             |
 
-At some point, the pods terminate, and the cluster looks like this:
+在某个时间点，pod已经终止，集群的状态可能如下：
 
 | node-1 *drained* | node-2            | node-3            |
-| ---------------- | ----------------- | ----------------- |
+| :--------------- | :---------------- | :---------------- |
 |                  | pod-b *available* | pod-c *available* |
 |                  | pod-d *starting*  | pod-y             |
 
-At this point, if an impatient cluster administrator tries to drain `node-2` or `node-3`, the drain command will block, because there are only 2 available pods for the deployment, and its PDB requires at least 2. After some time passes, `pod-d` becomes available.
+在这个时间点，如果是一位不够耐心的集群管理员尝试排除node-2或node-3,，由于deployment当前只有2个可用的pod，而且PDB要求有2个可用pod，因此drain命令会被阻塞。
 
-The cluster state now looks like this:
+集群现在的状态可能是这样的：
 
 | node-1 *drained* | node-2            | node-3            |
-| ---------------- | ----------------- | ----------------- |
+| :--------------- | :---------------- | :---------------- |
 |                  | pod-b *available* | pod-c *available* |
 |                  | pod-d *available* | pod-y             |
 
-Now, the cluster administrator tries to drain `node-2`. The drain command will try to evict the two pods in some order, say `pod-b`first and then `pod-d`. It will succeed at evicting `pod-b`. But, when it tries to evict `pod-d`, it will be refused because that would leave only one pod available for the deployment.
+现在，集群管理员尝试排除`node-2` 。排除命令尝试驱逐部署在node-2上面的两个pod，驱逐的顺序假设为先`pod-b`然后驱逐`pod-d`。驱逐`pod-b`将会成功，但是当尝试驱逐`pod-d`会被拒绝，因为deployment只有1个可用的pod，但是PDB要求最少2个。
 
-The deployment creates a replacement for `pod-b` called `pod-e`. Because there are not enough resources in the cluster to schedule `pod-e` the drain will again block. The cluster may end up in this state:
+deployment为pod-b创建一个替代pod-e。但是因为集群没有足够的资源来调度pod，排除命令将会再一次被阻塞，集群最终的状态可能如下：
 
 | node-1 *drained* | node-2            | node-3            | *no node*       |
-| ---------------- | ----------------- | ----------------- | --------------- |
+| :--------------- | :---------------- | :---------------- | :-------------- |
 |                  | pod-b *available* | pod-c *available* | pod-e *pending* |
 |                  | pod-d *available* | pod-y             |                 |
 
-At this point, the cluster administrator needs to add a node back to the cluster to proceed with the upgrade.
+此时，集群管理员需要将节点添加回集群以继续升级。
 
-You can see how Kubernetes varies the rate at which disruptions can happen, according to:
+根据以下条件，你可以看到Kubernetes如何改变中断发生的速度：
 
-- how many replicas an application needs
-- how long it takes to gracefully shutdown an instance
-- how long it takes a new instance to start up
-- the type of controller
-- the cluster’s resource capacity
+- 一个应用需要多少副本
+- 由于停止一个实例需要的时间
+- 启动一个新实例需要的时间
+- 控制器的类型
+- 集群资源容量
 
-## Separating Cluster Owner and Application Owner Roles
+## 分离群集所有者和应用程序所有者角色
 
-Often, it is useful to think of the Cluster Manager and Application Owner as separate roles with limited knowledge of each other. This separation of responsibilities may make sense in these scenarios:
+通常，将群集管理器和应用程序所有者视为彼此知之甚少的单独角色很有用。 在这些情况下，这种职责分离可能有意义：
 
-- when there are many application teams sharing a Kubernetes cluster, and there is natural specialization of roles
-- when third-party tools or services are used to automate cluster management
+- 当有多个应用团队共享一个Kubernetes集群时，角色分离是一件非常自然的事情。
+- 当使用第三方工具或服务来自动管理集群时。
 
-Pod Disruption Budgets support this separation of roles by providing an interface between the roles.
+Pod Disruption Budgets通过在角色之间提供接口来支持这种角色分离。如果您的组织中没有这样的责任分离，可能不需要使用Pod Disruption Budgets。
 
-If you do not have such a separation of responsibilities in your organization, you may not need to use Pod Disruption Budgets.
+## 如何在群集上执行中断操作
 
-## How to perform Disruptive Actions on your Cluster
+如果您是群集管理员，并且需要对群集中的所有节点执行中断操作，例如节点或系统软件升级，则可以使用以下选项：
 
-If you are a Cluster Administrator, and you need to perform a disruptive action on all the nodes in your cluster, such as a node or system software upgrade, here are some options:
-
-- Accept downtime during the upgrade.
-- Failover to another complete replica cluster.
-  - No downtime, but may be costly both for the duplicated nodes, and for human effort to orchestrate the switchover.
-- Write disruption tolerant applications and use PDBs.
-  - No downtime.
-  - Minimal resource duplication.
-  - Allows more automation of cluster administration.
-  - Writing disruption-tolerant applications is tricky, but the work to tolerate voluntary disruptions largely overlaps with work to support autoscaling and tolerating involuntary disruptions.
-
-## What's next
-
-- Follow steps to protect your application by [configuring a Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/).
-- Learn more about [draining nodes](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/)
-
-## Feedback
+- 升级期间接受停机。
+- 故障转移到另一个完整的副本群集。
+  - 无停机，但是需要双倍的节点以及需要人工切换。
+- 构建支持中断的应用并且使用PDBs
+  - 无停机。
+  - 最小资源冗余。
+  - 支持集群管理的高度自动化。
+  - 编写中断容错的应用非常棘手，但是，容忍自愿中断的工作在很大程度上与支持自动调节和容忍非自愿中断的工作重叠
